@@ -9,7 +9,7 @@ from loggers import *
 
 #----Поиск открытых портов----
 def find_serial_ports():
-    logger_write(0, "Ports searching")
+    system_logger_write("Ports searching")
     if sys.platform.startswith('win'):
         ports = ['COM%s' % (i + 1) for i in range(256)]
     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):

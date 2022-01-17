@@ -1,56 +1,60 @@
 #----Создание и основные методы работы с базой данных----
 
+import csv
 import pymysql
+import pymysql.cursors
 from loggers import *
 
 
+global connection
+
 def DB_connect():
-	try:
-		con = pymysql.connect(
-			'localhost', 
-			'admin_uzver', 
-		    's$eCr//et', 
-		    'local_data_base'
-		    )
-
-	except Exception as ex:
-		logger_write(0, "Connection error")
-
+	global connection
+	connection = pymysql.connect(host='localhost',
+		user='bd_uzver',
+		password='123',
+		db='bd_uzver',
+		autocommit=True)
 
 
 def create_table():
 	DB_connect()
 	try:
-		with con.cursor() as cursor:
-			cursor.execute("CREATE TABLE 'tests' (test_number smallint AUTO_INCREMENT, duration smallint, borehole smallint, imp_mode double_precision, before_time int, status varchar(7))")
-			logger_write(0, "Table created")
+		with connection.cursor() as cursor:
+			cursor.execute("CREATE TABLE IF NOT EXISTS testinging (test_number SMALLINT AUTO_INCREMENT PRIMARY KEY, duration SMALLINT, borehole SMALLINT, imp_mode DOUBLE PRECISION, before_time INT, status VARCHAR(7))")
 
 	finally:
-		con.close()
-
+		connection.close()
 
 
 def insert_data(duration, borehole, imp_mode, before_time, status ):
 	DB_connect()
 	try:
-		with con.cursor() as cursor:
-			cursor.execute("INSERT INTO 'tests' (duration, borehole, imp_mode, before_time, status) VALUES (duration, borehole, imp_mode, before_time, status)")
-			cursor.commit()
-			logger_write(0, "Data inserted")
+		with connection.cursor() as cursor:
+			cursor.execute("INSERT INTO tests (duration, borehole, imp_mode, before_time, status) VALUES (%s, %s, %s, %s, %s)",  (duration, borehole, imp_mode, before_time, status))
+			connection.commit()
 
 	finally:
-		con.close()
+		connection.close()
 
 
-def import_to_csv():
+"""def export_to_csv():
 	DB_connect()
 	data = ""
-	with con.cursor() as cursor:
-		cursor.execute("SELECT * FROM tests")
-		rows = cursor.fetchall()
-		with open("data_base_copy.txt", 'w') as file:
-			for row in rows:
-    			data = "{0} {1} {2} {3} {4} {5}".format(row[0], row[1], row[2], row[3], row[4], row[5]) + "\n"
-    			file.write(data)
-    			data = ""
+	try:
+		with connection.cursor() as cursor:
+			csv_file = open(r'test.csv', 'wb')
+			cursor.execute("SELECT * FROM tests")
 
+			for row in cursor.fetchall():
+				writer = csv.writer(csv_file)
+				writer.writerow(row)
+
+			
+
+	finally:
+		connection.close()
+
+"""
+create_table()
+insert_data(1, 4, 5, 6, "status")

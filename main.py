@@ -1,19 +1,23 @@
 #----------------------main----------------------
-from flask import Flask, url_for
+from flask import Flask, url_for, session, redirect
+
 
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/", methods=['POST', 'GET'])
 def index():
-	print(url_for('index'))
-	return "index"
+	if 'userLogged' in session:
+		return redirect(url_for('admin'))
+	elif request.method == 'POST' and request.form['password'] == "N$/N?o":
+		session['userLogged'] = request.form['password']
+		retun redirect(url_for('admin'))
 
 
 @app.route("/admin")
-def admin():
-	print(url_for('admin'))
-	return "bebras"
+def admin_site(password):
+	if 'userLogged' not in session or session['userLogged'] != password:
+		abort(401)
 
 
 @app.route("/test/<int:test_number>")

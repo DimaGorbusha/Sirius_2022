@@ -18,12 +18,12 @@ rec_data_logger.addHandler(logger_data_fh)
 system_logger.addHandler(logger_system_fh)
 
 
-def logger_write(logger, message):
-    if logger == 0:
-        system_logger.info(message)
-    elif logger == 1:
-        rec_data_logger.info(message)
+def system_logger_write(message, number):
+    system_logger.info(message)
 
 
-logger_write(0, "Bebra")
-logger_write(1, "Bebebbebeta") 
+def data_logger_write(message, number):
+    data = "Test № " + str(number) + ": " + message
+    rec_data_logger.info(data)
+    data = ""
+
