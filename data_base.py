@@ -11,9 +11,9 @@ global connection
 def DB_connect():
 	global connection
 	connection = pymysql.connect(host='localhost',
-		user='bd_uzver',
-		password='123',
-		db='bd_uzver',
+		user='bd_uzver', # script_user
+		password='123', # 
+		db='bd_uzver', # project_database
 		autocommit=True)
 
 
@@ -38,7 +38,7 @@ def insert_data(duration, borehole, imp_mode, before_time, status ):
 		connection.close()
 
 
-"""def export_to_csv():
+'''def export_to_csv():
 	DB_connect()
 	data = ""
 	try:
@@ -54,7 +54,7 @@ def insert_data(duration, borehole, imp_mode, before_time, status ):
 
 	finally:
 		connection.close()
+'''
 
-"""
 create_table()
 insert_data(1, 4, 5, 6, "status")
