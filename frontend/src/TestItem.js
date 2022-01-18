@@ -19,12 +19,14 @@ const styles = {
         marginBottom: '20px'
     },
     title_test: {
+        fontSize: '25pt',
         alignSelf: 'center',
         marginLeft: '10px',
         color: 'black',
         textDecoration: 'none'
     },
     title_status: {
+        fontSize: '25pt',
         alignSelf: 'center',
         marginLeft: 'auto',
         marginRight: '10px'
@@ -47,7 +49,7 @@ function TestItem({ test, index, is_successfull, duration, duty_cycle, preheat_t
 
     return (
         <div className="test_item" style={styles.test_item}>
-            <a className="title_test" style={styles.title_test} href={link}><h1>
+            <a className="title_test" style={styles.title_test} href={link}><h1 style={styles.title_test}>
             Тест №{index + 1}
             </h1></a>
             <h1 className="title_status" style={styles.title_status}>Статус <span style={styles.title_success}>{status_success}</span></h1>

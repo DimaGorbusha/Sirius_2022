@@ -74,6 +74,7 @@ function TestDetail() {
             marginLeft: '20px'
         },
         spanStart: {
+            fontFamily: 'Montserrat-Medium',
             textColor: 'white',
             color: 'white'
         },
