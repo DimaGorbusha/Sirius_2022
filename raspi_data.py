@@ -5,8 +5,6 @@ import time
 import glob
 from loggers import *
 
-global json_data
-
 #----Поиск открытых портов----
 def find_serial_ports():
     system_logger_write("COM-ports searching")
@@ -82,6 +80,8 @@ def read_arduino(test_id, voltage, pres, t_b, t_s, t_k, c_k, c_n):
         'current_nagrev': c_n
     }
 
+    return json_data
+
 
 def start_engine():
     system_logger_write("Start engine")
@@ -93,4 +93,7 @@ def stop_engine():
     write_arduino("s")
 
 
-serial_port_setup(115200, list(find_serial_ports()))
+# serial_port_setup(115200, list(find_serial_ports()))
+
+
+json_data = read_arduino(1, 3, 5, 7, 6, 6, 8, 9)
