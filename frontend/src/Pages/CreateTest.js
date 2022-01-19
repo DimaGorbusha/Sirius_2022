@@ -1,43 +1,11 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 
-function CreateTest() {
+function CreateTest({json_data}) {
 
 
     let tests = [
-        {
-            id: 1,
-            is_successfull: true,
-            duration: 20,
-            duty_cycle: 10,
-            preheat_time: 40,
-            pulse_period: 50
-
-        },
-        {
-            id: 2,
-            is_successfull: true,
-            duration: 60,
-            duty_cycle: 70,
-            preheat_time: 46,
-            pulse_period: 23
-        },
-        {
-            id: 3,
-            is_successfull: true,
-            duration: 78,
-            duty_cycle: 234,
-            preheat_time: 234,
-            pulse_period: 45
-        },
-        {
-            id: 4,
-            is_successfull: false,
-            duration: 46,
-            duty_cycle: 75,
-            preheat_time: 23,
-            pulse_period: 79
-        }
+        {json_data},
     ];
 
     const styles = {
@@ -81,6 +49,7 @@ function CreateTest() {
             flexFlow:'wrap'
         },
         spanStart: {
+            fontFamily: 'Montserrat-Medium',
             textColor: 'white',
             color: 'white',
             textDecoration: 'none'
