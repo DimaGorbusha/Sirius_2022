@@ -3,9 +3,9 @@ import serial
 import sys
 import time
 import glob
-import logging
 from loggers import *
 
+global json_data
 
 #----Поиск открытых портов----
 def find_serial_ports():
@@ -13,7 +13,6 @@ def find_serial_ports():
     if sys.platform.startswith('win'):
         ports = ['COM%s' % (i + 1) for i in range(256)]
     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-        # this excludes your current terminal "/dev/tty"
         ports = glob.glob('/dev/tty[A-Za-z]*')
     elif sys.platform.startswith('darwin'):
         ports = glob.glob('/dev/tty.*')
@@ -39,7 +38,7 @@ def serial_port_setup(baudrate, coms_arr):
     ser.port = coms_arr[0]
     str = "Selected: "
     str += coms_arr[0]
-    logger_write(0, str)
+    system_logger_write(str)
     del str
     ser.open()
 
@@ -66,21 +65,32 @@ def test_read_from_arduino():
             print(line)
 
 
-def read_arduino():
-    ser.flush()
-    data = ser.readline().decode('utf-8').rstrip()
-    loggers_write(1, data)
-    data = list(data.split())
+def read_arduino(test_id, voltage, pres, t_b, t_s, t_k, c_k, c_n):
+    # ser.flush()
+    # data = ser.readline().decode('utf-8').rstrip()
+    # data_logger_write(data, 1)
+    # data = list(data.split())
+    
+    json_data = {
+        'test_id': test_id,
+        'voltage_akb': voltage,
+        'pressure': pres,
+        'temperature_back': t_b,
+        'temperature_stenka': t_s,
+        'temperature_klapan': t_k,
+        'current_klapan': c_k,
+        'current_nagrev': c_n
+    }
 
 
 def start_engine():
-    system_loggers_write(0, "Start engine")
+    system_logger_write("Start engine")
     write_arduino("f")
 
 
 def stop_engine():
-    system_loggers_write(0, "Engine stop")
+    system_logger_write("Engine stop")
     write_arduino("s")
 
 
-#serial_port_setup(115200, list(find_serial_ports()))
+serial_port_setup(115200, list(find_serial_ports()))

@@ -1,4 +1,4 @@
-data_log.log 
 system_log.log
 /__pycache__
 /test_arduino
+/main.py
