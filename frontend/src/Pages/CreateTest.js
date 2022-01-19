@@ -81,6 +81,7 @@ function CreateTest() {
             flexFlow:'wrap'
         },
         spanStart: {
+            fontFamily: 'Montserrat-Medium',
             textColor: 'white',
             color: 'white',
             textDecoration: 'none'
