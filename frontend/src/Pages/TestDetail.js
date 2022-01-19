@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 
 
-function TestDetail() {
+function TestDetail({ json_data }) {
 
     const styles = {
         h1: {
@@ -101,39 +101,7 @@ function TestDetail() {
     }
 
     let tests = [
-        {
-            id: 1,
-            is_successfull: true,
-            duration: 20,
-            duty_cycle: 10,
-            preheat_time: 40,
-            pulse_period: 50
-
-        },
-        {
-            id: 2,
-            is_successfull: true,
-            duration: 60,
-            duty_cycle: 70,
-            preheat_time: 46,
-            pulse_period: 23
-        },
-        {
-            id: 3,
-            is_successfull: true,
-            duration: 78,
-            duty_cycle: 234,
-            preheat_time: 234,
-            pulse_period: 45
-        },
-        {
-            id: 4,
-            is_successfull: false,
-            duration: 46,
-            duty_cycle: 75,
-            preheat_time: 23,
-            pulse_period: 79
-        }
+        { json_data }
     ];
 
     const options = {
@@ -222,29 +190,39 @@ function TestDetail() {
     let duration = "Нет данных"
     let duty_cycle = "Нет данных"
     let preheat_time = "Нет данных"
-    let [pulse_period, setPulse_period ] = useState('Нет данных')
+    let [pulse_period, setPulse_period] = useState('Нет данных')
     let is_successfull = "Нет данных"
+    let status_success = 'Неизвестно'
+        if (is_successfull == true) {
+            status_success = 'Успешен';
+        } else if (is_successfull == false) {
+            status_success = 'Прерван';
+        }
+
+
+    try {
+        if (current_index < tests.length) {
+
+            duration = showDetail(current_index).duration.toString()
+            duty_cycle = showDetail(current_index).duty_cycle.toString()
+            preheat_time = showDetail(current_index).preheat_time.toString()
+            //pulse_period = showDetail(current_index).pulse_period.toString()
+            //setPulse_period(data)
+            is_successfull = showDetail(current_index).is_successfull
+
+        }
+    } catch (e) {
+        duration = "Нет данных"
+        duty_cycle = "Нет данных"
+        preheat_time = "Нет данных"
+        status_success = "Нет данных (ошибка)"
+
+
+    }
+
+
+
     
-
-
-    if (current_index < tests.length) {
-
-        duration = showDetail(current_index).duration.toString()
-        duty_cycle = showDetail(current_index).duty_cycle.toString()
-        preheat_time = showDetail(current_index).preheat_time.toString()
-        //pulse_period = showDetail(current_index).pulse_period.toString()
-        //setPulse_period(data)
-        is_successfull = showDetail(current_index).is_successfull
-
-    }
-
-
-    let status_success = 'Неизвестно';
-    if (is_successfull == true) {
-        status_success = 'Успешен';
-    } else if (is_successfull == false) {
-        status_success = 'Прерван';
-    }
 
     let [color, setColor] = useState('#4DD15A');
     let [textColor, setTextColor] = useState('white');
@@ -261,7 +239,7 @@ function TestDetail() {
     }
 
     function liveProcess() {
-        
+
         setInterval(() => {
             let data = new Date().getSeconds().toString()
             setPulse_period(data)  //тест чтобы проверить как обновляется
