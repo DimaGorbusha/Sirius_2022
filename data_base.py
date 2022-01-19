@@ -21,17 +21,34 @@ def create_table():
 	DB_connect()
 	try:
 		with connection.cursor() as cursor:
-			cursor.execute("CREATE TABLE IF NOT EXISTS testinging (test_number SMALLINT AUTO_INCREMENT PRIMARY KEY, duration SMALLINT, borehole SMALLINT, imp_mode DOUBLE PRECISION, before_time INT, status VARCHAR(7))")
+			cursor.execute("CREATE TABLE IF NOT EXISTS testinging \
+			(test_id SMALLINT AUTO_INCREMENT PRIMARY KEY, \
+			duration SMALLINT, borehole SMALLINT, imp_mode DOUBLE, \
+			before_time INT, status VARCHAR(7), akb_voltage FLOAT, \
+			pressure FLOAT, tank_temp FLOAT, engine_wall_temp FLOAT, \
+			valve_temp FLOAT, valva_current FLOAT, heating_current FLOAT)")
 
 	finally:
 		connection.close()
 
 
-def insert_data(duration, borehole, imp_mode, before_time, status ):
+def insert_data(duration, borehole, imp_mode, before_time, status, \
+	akb_voltage, press, tank_temp, engine_wall_temp, valve_temp, \
+	valva_current, heating_current):
+	
 	DB_connect()
 	try:
 		with connection.cursor() as cursor:
-			cursor.execute("INSERT INTO tests (duration, borehole, imp_mode, before_time, status) VALUES (%s, %s, %s, %s, %s)",  (duration, borehole, imp_mode, before_time, status))
+			cursor.execute("INSERT INTO tests (duration, \
+				borehole, \
+				imp_mode, \
+				before_time,\
+				status) \
+				VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+				(duration, borehole, imp_mode, before_time, status, \
+				akb_voltage, press, tank_temp, engine_wall_temp, \
+				valve_temp, valva_current, heating_current))
+
 			connection.commit()
 
 	finally:

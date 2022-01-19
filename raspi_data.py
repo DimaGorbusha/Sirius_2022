@@ -9,7 +9,7 @@ global json_data
 
 #----Поиск открытых портов----
 def find_serial_ports():
-    system_logger_write("Ports searching")
+    system_logger_write("COM-ports searching")
     if sys.platform.startswith('win'):
         ports = ['COM%s' % (i + 1) for i in range(256)]
     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
