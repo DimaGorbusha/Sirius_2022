@@ -1,8 +1,9 @@
 #----------------------main----------------------
-from flask import Flask, url_for, render, session, redirect
+from flask import Flask, url_for, render, session, redirect 
 
 
 app = Flask(__name__)
+
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -11,7 +12,7 @@ def index():
 		return redirect(url_for('admin'))
 	elif request.method == 'POST' and request.form['password'] == "N$/N?o":
 		session['userLogged'] = request.form['password']
-		retun redirect(url_for('admin'))
+		return redirect(url_for('admin'))
 
 
 @app.route("/admin")
