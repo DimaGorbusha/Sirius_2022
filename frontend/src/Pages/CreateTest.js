@@ -1,45 +1,43 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 
 function CreateTest() {
 
 
-    let tests = [
-        
-        {
-            id: 1,
-            is_successfull: true,
-            duration: 20,
-            duty_cycle: 10,
-            preheat_time: 40,
-            pulse_period: 50
+    let [state, setState] = useState({})
 
-        },
-        {
-            id: 2,
-            is_successfull: true,
-            duration: 60,
-            duty_cycle: 70,
-            preheat_time: 46,
-            pulse_period: 23
-        },
-        {
-            id: 3,
-            is_successfull: true,
-            duration: 78,
-            duty_cycle: 234,
-            preheat_time: 234,
-            pulse_period: 45
-        },
-        {
-            id: 4,
-            is_successfull: false,
-            duration: 46,
-            duty_cycle: 75,
-            preheat_time: 23,
-            pulse_period: 79
-        }
-    ];
+
+    useEffect(() => {
+        fetch("http://127.0.0.1:5000/list_tests", {
+            method: 'GET'
+        }).then(response => {
+            if (response.status == 200) {
+                return response.json()
+            }
+        }).then(data => {
+            setState(data.tests)
+        })
+            .then(error => console.log(error))
+    }, [])
+
+    let tests = [];
+    tests = state
+
+    /* 
+    //POST-запрос
+        fetch('https://mywebsite.com/endpoint/', {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        firstParam: 'yourValue',
+        secondParam: 'yourOtherValue',
+    })
+    })
+    */
 
     const styles = {
         h1: {
@@ -79,7 +77,7 @@ function CreateTest() {
         allID: {
             display: 'flex',
             width: 'auto',
-            flexFlow:'wrap'
+            flexFlow: 'wrap'
         },
         spanStart: {
             fontFamily: 'Montserrat-Medium',

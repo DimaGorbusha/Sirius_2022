@@ -84,7 +84,7 @@ def sign_up():
         json_data = {
             "is_logged": True
         }
-        return redirect(url_for("/list-tests"))
+        return redirect(url_for("/list_tests"))
 
     return render_template('index.html')
 

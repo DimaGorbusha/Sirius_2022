@@ -73,6 +73,7 @@ function TestDetail() {
             marginLeft: '20px'
         },
         spanStart: {
+            textDecoration: 'none',
             fontFamily: 'Montserrat-Medium',
             textColor: 'white',
             color: 'white'
@@ -99,9 +100,25 @@ function TestDetail() {
 
     }
 
-    let tests = [
-        
-    ];
+    let [state, setState] = useState({})
+
+    
+    useEffect(()=> {
+        fetch("http://127.0.0.1:5000/list_tests", {
+            method: 'GET'
+        }).then(response => {
+            if (response.status == 200) {
+                return response.json()
+            }
+        }).then(data => {
+            setState(data.tests)
+        })
+            .then(error => console.log(error))
+    }, [])
+
+    let tests = [];
+    tests = state
+    
 
     const options = {
         title: {
@@ -228,10 +245,10 @@ function TestDetail() {
     let [text, setText] = useState('Старт');
 
     const changeColor = () => {
-        if (color == "#4DD15A") {
+        if (color == "#4DD15A") { //если старт
             setColor("red");
             setText("Стоп");
-        } else {
+        } else { //если стоп
             setColor("#4DD15A");
             setText("Старт");
         }
@@ -286,7 +303,7 @@ function TestDetail() {
                     }}
                         onClick={changeColor}>
                         <span style={styles.spanStart} >{text}</span></button>
-                    <button style={styles.btn_logs}><span style={styles.spanStart}>Скачать лог</span></button>
+                    <button style={styles.btn_logs} ><span style={styles.spanStart} >Скачать лог</span></button>
                 </div>
                 <div style={styles.graph}>
                     <HighchartsReact highcharts={Highcharts} options={options} />

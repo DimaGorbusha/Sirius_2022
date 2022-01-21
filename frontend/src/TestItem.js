@@ -38,10 +38,13 @@ const styles = {
 
 function TestItem({ test, index, is_successfull, duration, duty_cycle, preheat_time, pulse_period }) {
     let status_success = 'Неизвестно';
+    
     if (is_successfull == true) {
         status_success = 'Успешен';
     } else if (is_successfull == false) {
         status_success = 'Прерван';
+    } else{
+        status_success = 'Неизвестно';
     }
 
     const link = "/test-detail/" + (index + 1).toString()
