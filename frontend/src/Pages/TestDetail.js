@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 
 
-function TestDetail({ json_data }) {
+function TestDetail() {
 
     const styles = {
         h1: {
@@ -100,7 +100,7 @@ function TestDetail({ json_data }) {
     }
 
     let tests = [
-        { json_data }
+        
     ];
 
     const options = {
