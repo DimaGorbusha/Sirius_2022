@@ -101,7 +101,9 @@ function TestDetail() {
     }
 
     let [data_tests, setDataTests] = useState({})
+    //let [isLoggedIn, setIsLoggedIn] = useState(false)
 
+ 
     
     useEffect(()=> {
         fetch("http://127.0.0.1:5000/list_tests", {
@@ -112,12 +114,23 @@ function TestDetail() {
             }
         }).then(data => {
             setDataTests(data.tests)
+            //setIsLoggedIn(data.isLogged)
         })
             .then(error => console.log(error))
     }, [])
 
     let tests = [];
     tests = data_tests;
+    const [display, setDisplay]= useState('block')
+
+    function checkLoggin(is_login){
+        if (is_login == true){
+            setDisplay('block')
+        }else{
+            setDisplay('none')
+        }
+    }
+    //checkLoggin(isLoggedIn)
     
     const options = {
         title: {
@@ -286,6 +299,7 @@ function TestDetail() {
                 </div>
                 <div style={styles.containerBtn}>
                     <button id="btnControl" className="btnControl" style={{
+                        display: display,
                         background: color,
                         color: textColor,
                         borderRadius: '75px',

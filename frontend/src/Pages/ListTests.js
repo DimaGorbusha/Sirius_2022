@@ -12,8 +12,8 @@ function ListTests() {
 
     let [state, setState] = useState({})
 
-    
-    useEffect(()=> {
+
+    useEffect(() => {
         fetch("http://127.0.0.1:5000/list_tests", {
             method: 'GET'
         }).then(response => {
@@ -28,8 +28,18 @@ function ListTests() {
 
     let tests = [];
     tests = state
-    
-    
+
+    //let [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [display, setDisplay] = useState('block')
+    function checkLoggin(is_login) {
+        if (is_login == true) {
+            setDisplay('block')
+        } else {
+            setDisplay('none')
+        }
+    }
+    //checkLoggin(isLoggedIn)
+
 
 
 
@@ -42,22 +52,7 @@ function ListTests() {
         part_title: {
             color: '#F2901D'
         },
-        btnCreateTest: {
-            marginLeft: 'auto',
-            marginRight: '90px',
-            backgroundColor: '#F2901D',
-            borderRadius: '75px',
-            fontFamily: 'Montserrat-Medium',
-            borderWidth: '2px',
-            borderStyle: 'solid',
-            borderColor: 'white',
-            fontSize: '2vw',
-            width: '20vw',
-            height: '2em',
-            marginTop: '15px',
-            textColor: 'white',
-            textDecoration: 'none'
-        },
+
         header: {
             display: 'flex',
             alignItems: 'baseline',
@@ -76,9 +71,30 @@ function ListTests() {
         <div>
             <header className='wrapper' style={styles.header}>
                 <h1 style={styles.h1}>Двигатель для <span className="part_title" style={styles.part_title}>наноспутника </span></h1>
-                <button style={styles.btnCreateTest}>
-                    <Link to='/create-test' style={styles.createTestTitle}>Создать тест</Link>
+                <Link to='/create-test' style={{
+                    textDecoration: 'none',
+                    marginLeft: 'auto'
+                }} >
+                <button style={{
+                    textDecoration:'none',
+                    marginLeft: 'auto',
+                    marginRight: '90px',
+                    backgroundColor: '#F2901D',
+                    borderRadius: '75px',
+                    fontFamily: 'Montserrat-Medium',
+                    borderWidth: '2px',
+                    borderStyle: 'solid',
+                    borderColor: 'white',
+                    fontSize: '2vw',
+                    width: '20vw',
+                    height: '2em',
+                    marginTop: '15px',
+                    textColor: 'white',
+                    textDecoration: 'none',
+                    display: display
+                }}><span style={styles.createTestTitle}>Создать тест</span>
                 </button>
+                </Link>
 
             </header>
 
