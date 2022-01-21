@@ -7,6 +7,7 @@
   font-family: 'Montserrat-Medium';
   src: local('Montserrat-Medium'), url(font/Montserrat-Medium.ttf);
 }
+
 @font-face {
   font-family: 'Montserrat-SemiBold';
   src: local('Montserrat-SemiBold'), url(font/Montserrat-SemiBold.ttf);

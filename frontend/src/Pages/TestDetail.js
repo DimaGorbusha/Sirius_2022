@@ -1,5 +1,4 @@
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.css'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import ListTests from './ListTests'
