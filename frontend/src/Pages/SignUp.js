@@ -3,7 +3,7 @@ import { useHref } from 'react-router-dom'
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { Router, Route, browserHistory } from 'react-router';
-
+import { useState, useEffect } from 'react'
 
 const SignUp = () => {
 
@@ -54,17 +54,33 @@ const SignUp = () => {
     e.target.style.textColor = "white"
   }
 
+  const [password, setPassword] = useState('');
+
+  /* 
+    //POST-запрос
+    fetch('https://localhost:5000/sign-up', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            password: password
+        })
+    })
+    */
+
   return (
     <div className="SignUp" style={styles.SignUp}>
       <h1 style={styles.h1}>
         Вход
       </h1>
-      <input className="formPass" style={styles.formPass} placeholder="Пароль" type="password"></input>
-      <button className="btnSign" id="btnSign" onMouseEnter={handleMouseEnter} style={styles.btnSign}>
-        <Link className="btnSign1" id="btnSign1" style={styles.btnSign1} to='/list-tests'>
-          Вход
-        </Link>
-      </button>
+      <input className="formPass" style={styles.formPass} placeholder="Пароль" type="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
+      <Link className="btnSign1" id="btnSign1" style={styles.btnSign1} to='/list-tests'>
+        <button className="btnSign" id="btnSign" type="submit" onMouseEnter={handleMouseEnter} style={styles.btnSign}>
+          <span style={styles.btnSign1}>Вход</span>
+        </button>
+      </Link>
 
     </div>
   );

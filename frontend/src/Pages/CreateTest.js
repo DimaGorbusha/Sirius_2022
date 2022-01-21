@@ -97,7 +97,7 @@ function CreateTest() {
     const [preheat_time, setPreheatTime] = useState('');
     const [duty_cycle, setDutyCycle] = useState('');
     const [pulse_period, setPulsePeriod] = useState('');
-    
+
     /* 
     //POST-запрос
     fetch('https://localhost:5000/create-test', {
