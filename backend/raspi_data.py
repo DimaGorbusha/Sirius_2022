@@ -3,7 +3,9 @@ import serial
 import sys
 import time
 import glob
-from loggers import *
+from loggers import system_logger_write, data_logger_write
+from data_base import insert_data, return_test_id
+from data_base import return_data
 
 #----Поиск открытых портов----
 def find_serial_ports():
@@ -63,22 +65,34 @@ def test_read_from_arduino():
             print(line)
 
 
-def read_arduino(test_id, voltage, pres, t_b, t_s, t_k, c_k, c_n):
-    # ser.flush()
-    # data = ser.readline().decode('utf-8').rstrip()
-    # data_logger_write(data, 1)
-    # data = list(data.split())
-    
-    json_data = {
-        'test_id': test_id,
-        'voltage_akb': voltage,
-        'pressure': pres,
-        'temperature_back': t_b,
-        'temperature_stenka': t_s,
-        'temperature_klapan': t_k,
-        'current_klapan': c_k,
-        'current_nagrev': c_n
-    }
+def read_arduino(test_id, duration, borehole, imp_mode, before_time, status, ):
+    ser.flush()
+    log_data = str(duration) + " " + str(borehole) + " " + \
+    str(imp_mode) + " " + str(before_time) + " " + str(status) 
+
+    data = ser.readline().decode('utf-8').rstrip()
+    data_logger_write(data, 1)
+    data = list(data.split())
+
+    for i in range(len(data)):
+        log_data += data[i] + " "
+
+    insert_data(duration, borehole, imp_mode, before_time, status, \
+    data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
+    data[7])
+
+    data_logger_write(log_data, test_id)
+
+    # json_data = {
+    #     'test_id': test_id,
+    #     'voltage_akb': voltage,
+    #     'pressure': pres,
+    #     'temperature_back': t_b,
+    #     'temperature_stenka': t_s,
+    #     'temperature_klapan': t_k,
+    #     'current_klapan': c_k,
+    #     'current_nagrev': c_n
+    # }
 
     return json_data
 
