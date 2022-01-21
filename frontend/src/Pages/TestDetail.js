@@ -100,7 +100,7 @@ function TestDetail() {
 
     }
 
-    let [state, setState] = useState({})
+    let [data_tests, setDataTests] = useState({})
 
     
     useEffect(()=> {
@@ -111,15 +111,14 @@ function TestDetail() {
                 return response.json()
             }
         }).then(data => {
-            setState(data.tests)
+            setDataTests(data.tests)
         })
             .then(error => console.log(error))
     }, [])
 
     let tests = [];
-    tests = state
+    tests = data_tests;
     
-
     const options = {
         title: {
             text: 'График'
