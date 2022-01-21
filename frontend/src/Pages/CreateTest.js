@@ -4,41 +4,6 @@ import { Link } from "react-router-dom"
 
 function CreateTest() {
 
-
-    let [state, setState] = useState({})
-
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:5000/list_tests", {
-            method: 'GET'
-        }).then(response => {
-            if (response.status == 200) {
-                return response.json()
-            }
-        }).then(data => {
-            setState(data.tests)
-        })
-            .then(error => console.log(error))
-    }, [])
-
-    let tests = [];
-    tests = state
-
-    /* 
-    //POST-запрос
-        fetch('https://mywebsite.com/endpoint/', {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-        firstParam: 'yourValue',
-        secondParam: 'yourOtherValue',
-    })
-    })
-    */
-
     const styles = {
         h1: {
             marginLeft: '90px',
@@ -103,9 +68,69 @@ function CreateTest() {
         },
 
     }
+
+
+    let [state, setState] = useState({})
+
+
+    useEffect(() => {
+        fetch("http://127.0.0.1:5000/list_tests", {
+            method: 'GET'
+        }).then(response => {
+            if (response.status == 200) {
+                return response.json()
+            }
+        }).then(data => {
+            setState(data.tests)
+        })
+            .then(error => console.log(error))
+    }, [])
+
+    let tests = [];
+    tests = state
+
     let lastIndex = tests.length
 
     const link = "/test-detail/" + (lastIndex + 1).toString()
+
+    const [duration, setDuration] = useState('');
+    const [preheat_time, setPreheatTime] = useState('');
+    const [duty_cycle, setDutyCycle] = useState('');
+    const [pulse_period, setPulsePeriod] = useState('');
+    
+    /* 
+    //POST-запрос
+    fetch('https://localhost:5000/create-test', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            test_id: (lastIndex+1),
+            duration: duration,
+            preheat_time: preheat_time,
+            duty_cycle: duty_cycle,
+            pulse_period: pulse_period,
+            status_success: null
+        })
+    })
+    */
+
+
+
+    /*
+    function addRes() {
+        let newRes = {
+            duration: duration,
+            preheat_time: preheat_time,
+            duty_cycle: duty_cycle,
+            pulse_period: pulse_period
+        };
+        return newRes
+    }
+    */
+
 
     return (
         <div>
@@ -119,12 +144,12 @@ function CreateTest() {
                 <div>
                     <div style={styles.containerID}>
                         <h1>Продолжительность</h1>
-                        <input style={styles.input_data} placeholder="Введите число" type="number" ></input>
+                        <input style={styles.input_data} placeholder="Введите число" type="number" value={duration} onChange={(event) => setDuration(event.target.value)}></input>
                         <span style={{ marginLeft: '1em' }}>С</span>
                     </div>
                     <div style={styles.containerID}>
                         <h1>Скважность</h1>
-                        <input style={styles.input_data} placeholder="Введите число" type="number" ></input>
+                        <input style={styles.input_data} placeholder="Введите число" type="number" value={duty_cycle} onChange={(event) => setDutyCycle(event.target.value)} ></input>
                         <span style={{ marginLeft: '1em' }}>С</span>
                     </div>
                 </div>
@@ -132,25 +157,25 @@ function CreateTest() {
                 <div>
                     <div style={styles.containerID}>
                         <h1>Время предпускового нагрева</h1>
-                        <input style={styles.input_data} placeholder="Введите число" type="number" ></input>
+                        <input style={styles.input_data} placeholder="Введите число" type="number" value={preheat_time} onChange={(event) => setPreheatTime(event.target.value)}></input>
                         <span style={{ marginLeft: '1em' }}>C</span>
                     </div>
                     <div style={styles.containerID}>
                         <h1>Период импульсного режима работы</h1>
-                        <input style={styles.input_data} placeholder="Введите число" type="number" ></input>
+                        <input style={styles.input_data} placeholder="Введите число" type="number" value={pulse_period} onChange={(event) => setPulsePeriod(event.target.value)}></input>
                         <span style={{ marginLeft: '1em' }}>C</span>
                     </div>
                 </div>
 
 
             </div>
-            <button id="btnControl" className="btnControl" style={styles.btn_start}>
-                <span >
-                    <Link style={styles.spanStart} to={link}>
+            <Link to={link}>
+                <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit">
+                    <span style={styles.spanStart}>
                         Старт
-                    </Link>
-                </span>
-            </button>
+                    </span>
+                </button>
+            </Link>
 
 
         </div>
