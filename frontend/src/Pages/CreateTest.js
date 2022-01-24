@@ -1,8 +1,37 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
+import { BrowserRouter as Redirect } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function CreateTest() {
+
+
+    let navigate = useNavigate()
+    const [is_login, setIsLogin] = useState(true)
+
+    
+
+    function check(isLogin) {
+        if (isLogin == false) {
+            navigate("/list-tests")
+        }
+    }
+
+    //test upd
+    function liveProcess() {
+
+        setInterval(() => {
+            setIsLogin(true)
+            check(is_login)
+        }, 0)
+    }
+
+    liveProcess()
+    
+
+
+
 
     const styles = {
         h1: {
@@ -90,33 +119,39 @@ function CreateTest() {
     tests = state
 
     let lastIndex = tests.length
+    if (lastIndex == null) {
+        lastIndex = 0
+    }
 
     const link = "/test-detail/" + (lastIndex + 1).toString()
 
-    const [duration, setDuration] = useState('');
-    const [preheat_time, setPreheatTime] = useState('');
-    const [duty_cycle, setDutyCycle] = useState('');
-    const [pulse_period, setPulsePeriod] = useState('');
+    const [duration, setDuration] = useState('30');
+    const [preheat_time, setPreheatTime] = useState('40');
+    const [duty_cycle, setDutyCycle] = useState('50');
+    const [pulse_period, setPulsePeriod] = useState('60');
 
-    /* 
-    //POST-запрос
-    fetch('https://localhost:5000/create-test', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            test_id: (lastIndex+1),
-            duration: duration,
-            preheat_time: preheat_time,
-            duty_cycle: duty_cycle,
-            pulse_period: pulse_period,
-            status_success: null
+    const sendData = () => {
+        //POST-запрос
+        fetch('https://localhost:5000/create-test', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                test_id: (lastIndex + 1),
+                duration: duration,
+                preheat_time: preheat_time,
+                duty_cycle: duty_cycle,
+                pulse_period: pulse_period,
+                status_success: null
+            })
         })
-    })
-    */
+    }
 
+
+    //let [isLoggedIn, setIsLoggedIn] = useState(false)
+    //const [display, setDisplay] = useState('block')
 
 
     /*
@@ -170,7 +205,7 @@ function CreateTest() {
 
             </div>
             <Link to={link}>
-                <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit">
+                <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit" onClick={sendData}>
                     <span style={styles.spanStart}>
                         Старт
                     </span>

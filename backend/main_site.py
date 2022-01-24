@@ -1,6 +1,7 @@
 # ----------------------main----------------------
 #from crypt import methods
 #from crypt import methods
+from crypt import methods
 from flask import Flask, url_for, render_template, session, redirect, request
 from loggers import *
 from flask_cors import CORS, cross_origin
@@ -60,7 +61,7 @@ def list_test():
     }
 
 
-@app.route("/test-detail/<int:test_number>")
+@app.route("/test-detail/<int:test_number>", methods=["GET", "POST"])
 def show_test_detail(index):
 
     return render_template("index.html", json_data[index])
