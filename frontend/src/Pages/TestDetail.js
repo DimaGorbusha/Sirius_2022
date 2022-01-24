@@ -221,11 +221,7 @@ function TestDetail() {
     let [pulse_period, setPulse_period] = useState('Нет данных')
     let is_successfull = "Нет данных"
     let status_success = 'Неизвестно'
-        if (is_successfull == true) {
-            status_success = 'Успешен';
-        } else if (is_successfull == false) {
-            status_success = 'Прерван';
-        }
+        
 
 
     try {
@@ -234,10 +230,14 @@ function TestDetail() {
             duration = showDetail(current_index).duration.toString()
             duty_cycle = showDetail(current_index).duty_cycle.toString()
             preheat_time = showDetail(current_index).preheat_time.toString()
-            //pulse_period = showDetail(current_index).pulse_period.toString()
+            pulse_period = showDetail(current_index).pulse_period.toString()
             //setPulse_period(data)
             is_successfull = showDetail(current_index).is_successfull
-
+            if (is_successfull == true) {
+                status_success = 'Успешен';
+            } else if (is_successfull == false) {
+                status_success = 'Прерван';
+            }
         }
     } catch (e) {
         duration = "Нет данных"
@@ -266,6 +266,7 @@ function TestDetail() {
         }
     }
 
+    //test upd
     function liveProcess() {
 
         setInterval(() => {
@@ -274,16 +275,14 @@ function TestDetail() {
         }, 1000)
     }
 
-    liveProcess()
+    //liveProcess()
 
 
     return (
         <div>
             <header>
-                <h1
-                    style={styles.h1}>Двигатель для <span className="part_title" style={styles.part_title}>
-                        <Link style={styles.part_title} to='/list-tests'>наноспутника</Link>
-                    </span>
+                <h1 style={styles.h1}>Двигатель для <span className="part_title" style={styles.part_title}>
+                        <Link style={styles.part_title} to='/list-tests'>наноспутника</Link> </span>
                 </h1>
             </header>
             <div className="containerTest" style={styles.containerTest}>

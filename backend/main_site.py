@@ -1,6 +1,7 @@
 # ----------------------main----------------------
 #from crypt import methods
 #from crypt import methods
+from crypt import methods
 from flask import Flask, url_for, render_template, session, redirect, request
 from backend.raspi_data import read_arduino
 from loggers import *
@@ -63,7 +64,7 @@ def list_test():
     }
 
 
-@app.route("/test-detail/<int:test_number>")
+@app.route("/test-detail/<int:test_number>", methods=["GET", "POST"])
 def show_test_detail(index):
 
     # return render_template("index.html", json_data[index])

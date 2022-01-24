@@ -74,7 +74,7 @@ function ListTests() {
                 <Link to='/create-test' style={{
                     textDecoration: 'none',
                     marginLeft: 'auto'
-                }} >
+                }}>
                 <button style={{
                     textDecoration:'none',
                     marginLeft: 'auto',
