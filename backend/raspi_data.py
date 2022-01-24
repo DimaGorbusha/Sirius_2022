@@ -7,6 +7,8 @@ from loggers import system_logger_write, data_logger_write
 from data_base import insert_data, return_test_id
 from data_base import return_data
 
+test_id = 1
+
 #----Поиск открытых портов----
 def find_serial_ports():
     system_logger_write("COM-ports searching")
@@ -48,24 +50,10 @@ def write_arduino(message):
     ser.write(message)
 
 
-def test_write_to_arduino():
-    ser.flush()
-    while True:
-        ser.write(b"Hello from RPI!\n")
-        line = ser.readline().decode('utf-8').rstrip()
-        print(line)
-        time.sleep(3)
-
-
-def test_read_from_arduino():
-    ser.flush()
-    while True:
-        if ser.in_waiting > 0:
-            line = ser.readline().decode('utf-8').rstrip()
-            print(line)
-
-
-def read_arduino(test_id, duration, borehole, imp_mode, before_time, status):
+def read_arduino(duration, borehole, imp_mode, before_time, status):
+    global test_id
+    test_id += 1 
+    
     ser.flush()
     log_data = str(duration) + " " + str(borehole) + " " + \
     str(imp_mode) + " " + str(before_time) + " " + str(status) 
