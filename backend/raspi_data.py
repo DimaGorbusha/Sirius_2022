@@ -65,7 +65,7 @@ def test_read_from_arduino():
             print(line)
 
 
-def read_arduino(test_id, duration, borehole, imp_mode, before_time, status, ):
+def read_arduino(test_id, duration, borehole, imp_mode, before_time, status):
     ser.flush()
     log_data = str(duration) + " " + str(borehole) + " " + \
     str(imp_mode) + " " + str(before_time) + " " + str(status) 
@@ -83,19 +83,6 @@ def read_arduino(test_id, duration, borehole, imp_mode, before_time, status, ):
 
     data_logger_write(log_data, test_id)
 
-    # json_data = {
-    #     'test_id': test_id,
-    #     'voltage_akb': voltage,
-    #     'pressure': pres,
-    #     'temperature_back': t_b,
-    #     'temperature_stenka': t_s,
-    #     'temperature_klapan': t_k,
-    #     'current_klapan': c_k,
-    #     'current_nagrev': c_n
-    # }
-
-    return json_data
-
 
 def start_engine():
     system_logger_write("Start engine")
@@ -107,7 +94,5 @@ def stop_engine():
     write_arduino("s")
 
 
-# serial_port_setup(115200, list(find_serial_ports()))
-
-
+serial_port_setup(115200, list(find_serial_ports()))
 json_data = read_arduino(1, 3, 5, 7, 6, 6, 8, 9)

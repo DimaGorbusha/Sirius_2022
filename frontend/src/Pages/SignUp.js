@@ -75,7 +75,7 @@ const SignUp = () => {
       <h1 style={styles.h1}>
         Вход
       </h1>
-      <input className="formPass" style={styles.formPass} placeholder="Пароль" type="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
+      <input name="formPass" style={styles.formPass} placeholder="Пароль" type="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
       <Link className="btnSign1" id="btnSign1" style={styles.btnSign1} to='/list-tests'>
         <button className="btnSign" id="btnSign" type="submit" onMouseEnter={handleMouseEnter} style={styles.btnSign}>
           <span style={styles.btnSign1}>Вход</span>

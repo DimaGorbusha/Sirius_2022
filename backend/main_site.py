@@ -73,21 +73,20 @@ def create_test():
 
 @app.route("/sign-up", methods=["POST", "GET"])
 def sign_up():
-    if 'userLogged' in session:
+
+    if session["userLogged"] == True:
         json_data = {
-            "is_logged": True
-        }
-        return redirect(url_for("/list-tests"))
-
-    elif request.method == 'POST' and request.form['password'] == password:
-        system_logger_write
+            "isLogged": session["userLogged"]
+        } 
+        return json_data
+    
+    elif request.method == "POST" and request.form["formPass"] == password:
+        system_logger_write("User logged") 
+        session["userLogged"] = True
         json_data = {
-            "is_logged": True
-        }
-        return redirect(url_for("/list_tests"))
-
-    return render_template('index.html')
-
+            "isLogged": session["userLogged"]
+        } 
+        return json_data
 
 if __name__ == '__main__':
     app.run(debug=True)
