@@ -25,7 +25,8 @@ def index():
 @app.route("/list_tests", methods=['GET'])
 @cross_origin()
 def list_test():
-    return export_all_data
+    data = export_all_data()
+    return data
 
 
 @app.route("/test-detail/<int:test_number>", methods=["GET", "POST"])
