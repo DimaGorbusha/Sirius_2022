@@ -4,7 +4,7 @@ import sys
 import time
 import glob
 from loggers import system_logger_write, data_logger_write
-from data_base import insert_data, return_test_id
+from data_base import insert_data
 #from data_base import return_data
 
 test_id = 1
