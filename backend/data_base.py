@@ -1,12 +1,6 @@
 #----Создание и основные методы работы с базой данных----
 # AdmIn//1857
-# admin
-
 # script_user
-# 10.34.206.231
-# 1857
-# BeB//RocHk#a
-
 
 import pymysql
 from loggers import *
