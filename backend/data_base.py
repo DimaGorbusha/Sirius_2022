@@ -73,7 +73,8 @@ def export_all_data():
             # выполняем запрос
             cursor.execute(sql)
             # Возвращаем словарь сo всеми записями
-            return cursor.fetchall()
+            data=cursor.fetchall()
+            return data
 
     except Exception as error:
         # возвращаем содержание ошибки
@@ -88,7 +89,7 @@ def export_data_json(data_test_id):
     try:
         with connection.cursor() as cursor:
             cursor.execute(
-                "SELECT * FROM `tests` WHERE 'test_id' = {}".format(data_test_id))
+                "SELECT * FROM tests WHERE test_id = {}".format(data_test_id))
             data = cursor.fetchone()
             data_json = {
                 'test_id': data[0],
