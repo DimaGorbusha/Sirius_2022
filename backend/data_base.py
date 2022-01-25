@@ -23,7 +23,7 @@ def create_table():
 		with connection.cursor() as cursor:
 			cursor.execute("CREATE TABLE IF NOT EXISTS tests \
 			(test_id SMALLINT AUTO_INCREMENT PRIMARY KEY, \
-			duration SMALLINT, borehole SMALLINT, imp_mode DOUBLE, \
+			duration SMALLINT, borehole_opn SMALLINT, borehole_cls SMALLINT, \
 			before_time INT, status VARCHAR(15), time_after_start SMALLINT, \
 			akb_voltage DOUBLE, pressure DOUBLE, tank_temp DOUBLE, engine_wall_temp DOUBLE, \
 			valve_temp DOUBLE, valve_current DOUBLE, heating_current DOUBLE)")
@@ -32,7 +32,7 @@ def create_table():
 		connection.close()
 
 
-def insert_data(duration, borehole, imp_mode, before_time, status, time_after_start, \
+def insert_data(duration, borehole_opn, borehole_cls, before_time, status, time_after_start, \
 	akb_voltage, press, tank_temp, engine_wall_temp, valve_temp, \
 	valve_current, heating_current):
 
@@ -40,8 +40,8 @@ def insert_data(duration, borehole, imp_mode, before_time, status, time_after_st
 	try:
 		with connection.cursor() as cursor:
 			sql_query = "INSERT INTO tests (duration, \
-				borehole, \
-				imp_mode, \
+				borehole_opn, \
+				borehole_cls, \
 				before_time,\
 				status, \
 				time_after_start, \
@@ -54,7 +54,7 @@ def insert_data(duration, borehole, imp_mode, before_time, status, time_after_st
 				heating_current) \
 				VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 			cursor.execute(sql_query, \
-				(duration, borehole, imp_mode, before_time, status, \
+				(duration, borehole_opn, borehole_cls, before_time, status, \
 				time_after_start, akb_voltage, press, tank_temp, engine_wall_temp, \
 				valve_temp, valve_current, heating_current))
 
@@ -71,8 +71,8 @@ def export_data_json(data_test_id):
 				data_json = {
 					'test_id': data[0],
 					'duration': data[1],
-					'borehole': data[2],
-					'imp_mode': data[3],
+					'borehole_opn': data[2],
+					'borehole_cls': data[3],
 					'before_time': data[4],
 					'status': data[5],
 					'time_after_start': data[6],
@@ -121,7 +121,8 @@ def return_test_id(test_id):
 		connection.close()
 '''
 
+"""
 create_table()
 insert_data(22, 12, 33, 41, "УСПЕХ", 21, \
 	22.0, 44.55, 78.66, 797.00066, 120555.69, \
-	666.666, 789.999)
+	666.666, 789.999)"""

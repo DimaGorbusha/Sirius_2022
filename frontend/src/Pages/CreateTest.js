@@ -183,8 +183,8 @@ function CreateTest() {
                         <span style={{ marginLeft: '1em' }}>С</span>
                     </div>
                     <div style={styles.containerID}>
-                        <h1>Скважность</h1>
-                        <input name="borehole" style={styles.input_data} placeholder="Введите число" type="number" value={duty_cycle} onChange={(event) => setDutyCycle(event.target.value)} ></input>
+                        <h1>Период открытого клапана</h1>
+                        <input name="borehole_opn" style={styles.input_data} placeholder="Введите число" type="number" value={duty_cycle} onChange={(event) => setDutyCycle(event.target.value)} ></input>
                         <span style={{ marginLeft: '1em' }}>С</span>
                     </div>
                 </div>
@@ -196,8 +196,8 @@ function CreateTest() {
                         <span style={{ marginLeft: '1em' }}>C</span>
                     </div>
                     <div style={styles.containerID}>
-                        <h1>Период импульсного режима работы</h1>
-                        <input name="imp_mode" style={styles.input_data} placeholder="Введите число" type="number" value={pulse_period} onChange={(event) => setPulsePeriod(event.target.value)}></input>
+                        <h1>Период закрытого клапана</h1>
+                        <input name="borehole_cls" style={styles.input_data} placeholder="Введите число" type="number" value={pulse_period} onChange={(event) => setPulsePeriod(event.target.value)}></input>
                         <span style={{ marginLeft: '1em' }}>C</span>
                     </div>
                 </div>
