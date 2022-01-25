@@ -179,12 +179,12 @@ function CreateTest() {
                 <div>
                     <div style={styles.containerID}>
                         <h1>Продолжительность</h1>
-                        <input style={styles.input_data} placeholder="Введите число" type="number" value={duration} onChange={(event) => setDuration(event.target.value)}></input>
+                        <input name="duration" style={styles.input_data} placeholder="Введите число" type="number" value={duration} onChange={(event) => setDuration(event.target.value)}></input>
                         <span style={{ marginLeft: '1em' }}>С</span>
                     </div>
                     <div style={styles.containerID}>
                         <h1>Скважность</h1>
-                        <input style={styles.input_data} placeholder="Введите число" type="number" value={duty_cycle} onChange={(event) => setDutyCycle(event.target.value)} ></input>
+                        <input name="borehole" style={styles.input_data} placeholder="Введите число" type="number" value={duty_cycle} onChange={(event) => setDutyCycle(event.target.value)} ></input>
                         <span style={{ marginLeft: '1em' }}>С</span>
                     </div>
                 </div>
@@ -192,12 +192,12 @@ function CreateTest() {
                 <div>
                     <div style={styles.containerID}>
                         <h1>Время предпускового нагрева</h1>
-                        <input style={styles.input_data} placeholder="Введите число" type="number" value={preheat_time} onChange={(event) => setPreheatTime(event.target.value)}></input>
+                        <input name="heating_time" style={styles.input_data} placeholder="Введите число" type="number" value={preheat_time} onChange={(event) => setPreheatTime(event.target.value)}></input>
                         <span style={{ marginLeft: '1em' }}>C</span>
                     </div>
                     <div style={styles.containerID}>
                         <h1>Период импульсного режима работы</h1>
-                        <input style={styles.input_data} placeholder="Введите число" type="number" value={pulse_period} onChange={(event) => setPulsePeriod(event.target.value)}></input>
+                        <input name="imp_mode" style={styles.input_data} placeholder="Введите число" type="number" value={pulse_period} onChange={(event) => setPulsePeriod(event.target.value)}></input>
                         <span style={{ marginLeft: '1em' }}>C</span>
                     </div>
                 </div>
