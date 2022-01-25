@@ -3,6 +3,7 @@
 #from crypt import methods
 from crypt import methods
 from flask import Flask, url_for, render_template, session, redirect, request
+from backend.data_base import export_all_data
 from raspi_data import read_arduino
 from loggers import *
 from flask_cors import CORS, cross_origin
@@ -24,7 +25,11 @@ def index():
 @app.route("/list_tests", methods=['GET'])
 @cross_origin()
 def list_test():
-    return {
+    return export_all_data
+
+
+'''
+{
         "tests": [
             {
                 "id": 1,
@@ -62,7 +67,7 @@ def list_test():
         ],
         "list_tests": "hello"
     }
-
+'''
 
 @app.route("/test-detail/<int:test_number>", methods=["GET", "POST"])
 def show_test_detail(index):
