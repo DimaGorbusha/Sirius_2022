@@ -91,7 +91,7 @@ def export_all_data():
                     'valve_current': data[12],
                     'heating_current': data[13]
                 }
-            return data
+            return res
 
     except Exception as error:
         # возвращаем содержание ошибки
