@@ -1,4 +1,4 @@
-#----Создание и основные методы работы с базой данных----
+  #----Создание и основные методы работы с базой данных----
 # AdmIn//1857
 # script_user
 
@@ -71,9 +71,9 @@ def export_data_json(data_test_id):
 				data_json = {
 					'test_id': data[0],
 					'duration': data[1],
-					'borehole': data[2],
-					'imp_mode': data[3],
-					'before_time': data[4],
+					'borehole_open': data[2],
+					'borehole_close': data[3],
+					'before_heating_time': data[4],
 					'status': data[5],
 					'time_after_start': data[6],
 					'akb_voltage': data[7],

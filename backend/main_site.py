@@ -26,40 +26,40 @@ def index():
 def list_test():
     return {
         "tests": [
-        {
-            "id": 1,
-            "is_successfull": True,
-            "duration": 20,
-            "duty_cycle": 10,
-            "preheat_time": 40,
-            "pulse_period": 50
+            {
+                "id": 1,
+                "is_successfull": True,
+                "duration": 20,
+                "duty_cycle": 10,
+                "preheat_time": 40,
+                "pulse_period": 50
 
-        },
-        {
-            "id": 2,
-            "is_successfull": True,
-            "duration": 60,
-            "duty_cycle": 70,
-            "preheat_time": 46,
-            "pulse_period": 23
-        },
-        {
-            "id": 3,
-            "is_successfull": True,
-            "duration": 78,
-            "duty_cycle": 234,
-            "preheat_time": 234,
-            "pulse_period": 45
-        },
-        {
-            "id": 4,
-            "is_successfull": False,
-            "duration": 46,
-            "duty_cycle": 75,
-            "preheat_time": 23,
-            "pulse_period": 79
-        }
-    ],
+            },
+            {
+                "id": 2,
+                "is_successfull": True,
+                "duration": 60,
+                "duty_cycle": 70,
+                "preheat_time": 46,
+                "pulse_period": 23
+            },
+            {
+                "id": 3,
+                "is_successfull": True,
+                "duration": 78,
+                "duty_cycle": 234,
+                "preheat_time": 234,
+                "pulse_period": 45
+            },
+            {
+                "id": 4,
+                "is_successfull": False,
+                "duration": 46,
+                "duty_cycle": 75,
+                "preheat_time": 23,
+                "pulse_period": 79
+            }
+        ],
         "list_tests": "hello"
     }
 
@@ -68,6 +68,7 @@ def list_test():
 def show_test_detail(test_id):
     data = export_data_json(test_id)
     return data
+
 
 @app.route("/create-test", methods=["POST", "GET"])
 def create_test():
@@ -82,14 +83,16 @@ def create_test():
             test_heat_time = request.form["heating_time"]
             test_imp_mode = request.form["imp_mode"]
             test_status = "Выполняется"
-            read_arduino(test_duration, test_borehole, test_heat_time, test_imp_mode, test_status)
+            read_arduino(test_duration, test_borehole,
+                         test_heat_time, test_imp_mode, test_status)
             sleep(1)
-            
+
         test_duration = request.form["duration"]
         test_borehole = request.form["borehole"]
         test_heat_time = request.form["heating_time"]
         test_imp_mode = request.form["imp_mode"]
         test_status = "Завершён"
+
         read_arduino(test_duration, test_borehole, test_heat_time, test_imp_mode, test_status)
         stop_engine()
 
@@ -100,15 +103,15 @@ def sign_up():
     if session["userLogged"] == True:
         json_data = {
             "isLogged": session["userLogged"]
-        } 
+        }
         return json_data
-    
+
     elif request.method == "POST" and request.form["formPass"] == password:
-        system_logger_write("User logged as admin") 
+        system_logger_write("User logged as admin")
         session["userLogged"] = True
         json_data = {
             "isLogged": session["userLogged"]
-        } 
+        }
         return json_data
 
 
