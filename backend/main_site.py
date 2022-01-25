@@ -1,13 +1,13 @@
 # ----------------------main----------------------
-#from crypt import methods
-#from crypt import methods
 from crypt import methods
-from flask import Flask, url_for, render_template, session, redirect, request
-from backend.raspi_data import read_arduino
+from flask import Flask, render_template, session, request
+from raspi_data import read_arduino, start_engine, stop_engine, \
+    serial_port_setup, find_serial_ports
+
 from loggers import *
 from flask_cors import CORS, cross_origin
-# from data_base import insert_data, export_data_json
 from time import sleep
+from data_base import export_data_json
 
 
 app = Flask(__name__)
@@ -65,15 +65,16 @@ def list_test():
 
 
 @app.route("/test-detail/<int:test_number>", methods=["GET", "POST"])
-def show_test_detail(index):
-
-    # return render_template("index.html", json_data[index])
-
+def show_test_detail(test_id):
+    data = export_data_json(test_id)
+    return data
 
 @app.route("/create-test", methods=["POST", "GET"])
 def create_test():
     if request.method == "POST":
         count = 0
+        serial_port_setup(115200, find_serial_ports())
+        start_engine()
         while count != int(request.form["duration"]) - 1:
             count += 1
             test_duration = request.form["duration"]
@@ -90,6 +91,7 @@ def create_test():
         test_imp_mode = request.form["imp_mode"]
         test_status = "Завершён"
         read_arduino(test_duration, test_borehole, test_heat_time, test_imp_mode, test_status)
+        stop_engine()
 
 
 @app.route("/sign-up", methods=["POST", "GET"])
@@ -108,6 +110,7 @@ def sign_up():
             "isLogged": session["userLogged"]
         } 
         return json_data
+
 
 if __name__ == '__main__':
     app.run(debug=True)

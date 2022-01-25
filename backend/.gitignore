@@ -2,3 +2,4 @@ system_log.log
 /__pycache__
 /test_arduino
 /main.py
+raspi_test.py
