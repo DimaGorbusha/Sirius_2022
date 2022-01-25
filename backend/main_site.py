@@ -25,50 +25,8 @@ def index():
 @app.route("/list_tests", methods=['GET'])
 @cross_origin()
 def list_test():
-    print(export_all_data)
     return export_all_data
 
-
-'''
-{
-        "tests": [
-            {
-                "id": 1,
-                "is_successfull": True,
-                "duration": 20,
-                "duty_cycle": 10,
-                "preheat_time": 40,
-                "pulse_period": 50
-
-            },
-            {
-                "id": 2,
-                "is_successfull": True,
-                "duration": 60,
-                "duty_cycle": 70,
-                "preheat_time": 46,
-                "pulse_period": 23
-            },
-            {
-                "id": 3,
-                "is_successfull": True,
-                "duration": 78,
-                "duty_cycle": 234,
-                "preheat_time": 234,
-                "pulse_period": 45
-            },
-            {
-                "id": 4,
-                "is_successfull": False,
-                "duration": 46,
-                "duty_cycle": 75,
-                "preheat_time": 23,
-                "pulse_period": 79
-            }
-        ],
-        "list_tests": "hello"
-    }
-'''
 
 @app.route("/test-detail/<int:test_number>", methods=["GET", "POST"])
 def show_test_detail(index):
