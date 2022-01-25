@@ -11,9 +11,9 @@ global connection
 def DB_connect():
 	global connection
 	connection = pymysql.connect(host='localhost', # 10.34.206.231
-		user='bd_uzver', # admin
-		password='123', # AdmIn//1857
-		db='bd_uzver', # bebrochk
+		user='user', # admin
+		password='bebera2288', # AdmIn//1857
+		db='testsdb', # bebrochk
 		autocommit=True)
 
 
@@ -24,7 +24,7 @@ def create_table():
 			cursor.execute("CREATE TABLE IF NOT EXISTS tests \
 			(test_id SMALLINT AUTO_INCREMENT PRIMARY KEY, \
 			duration SMALLINT, borehole SMALLINT, imp_mode DOUBLE, \
-			before_time INT, status VARCHAR(15), time_after_start SMALLINT, \
+			before_time INT, status BOOLEAN, time_after_start SMALLINT, \
 			akb_voltage DOUBLE, pressure DOUBLE, tank_temp DOUBLE, engine_wall_temp DOUBLE, \
 			valve_temp DOUBLE, valve_current DOUBLE, heating_current DOUBLE)")
 
