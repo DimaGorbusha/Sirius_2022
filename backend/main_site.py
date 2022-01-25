@@ -3,7 +3,7 @@
 #from crypt import methods
 from crypt import methods
 from flask import Flask, url_for, render_template, session, redirect, request
-from backend.raspi_data import read_arduino
+from raspi_data import read_arduino
 from loggers import *
 from flask_cors import CORS, cross_origin
 # from data_base import insert_data, export_data_json
