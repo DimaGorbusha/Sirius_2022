@@ -83,4 +83,4 @@ def stop_engine():
 
 
 serial_port_setup(115200, list(find_serial_ports()))
-json_data = read_arduino(1, 3, 5, 7, 6, 6, 8, 9)
+# json_data = read_arduino(1, 3, 5, 7, 6, 6, 8, 9)
