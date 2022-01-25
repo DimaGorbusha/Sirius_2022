@@ -11,9 +11,9 @@ global connection
 def DB_connect():
 	global connection
 	connection = pymysql.connect(host='localhost', # 10.34.206.231
-		user='user', # admin
-		password='bebera2288', # AdmIn//1857
-		db='testsdb', # bebrochk
+		user='bd_uzver', # admin
+		password='123', # AdmIn//1857
+		db='bd_uzver', # bebrochk
 		autocommit=True)
 
 
