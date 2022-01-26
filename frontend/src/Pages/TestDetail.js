@@ -279,8 +279,8 @@ function TestDetail() {
     }
 
     //liveProcess()
-    let download_log = "/backend/test_data_log"+(lastIndex+1).toString()+".log"
-
+    let download_log = "/data_log"+(current_index+1).toString()+".log"
+    
     const statusTest = (status) => {
         //POST-запрос
         fetch('https://localhost:5000/create-test', {
