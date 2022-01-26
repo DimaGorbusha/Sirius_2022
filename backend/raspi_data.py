@@ -34,6 +34,7 @@ def find_serial_ports():
 
 #----Функции логики----
 def serial_port_setup(baudrate, coms_arr):
+    global ser
     ser = serial.Serial()
     ser.baudrate = baudrate
     print(*coms_arr)
