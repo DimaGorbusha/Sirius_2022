@@ -5,7 +5,7 @@ import time
 import glob
 from loggers import system_logger_write, data_logger_write
 from data_base import insert_data
-
+#from data_base import return_data
 
 test_id = 1
 
@@ -86,4 +86,5 @@ def stop_engine():
 
 
 serial_port_setup(115200, list(find_serial_ports()))
-json_data = read_arduino(1, 3, 5, 7)
+
+json_data = read_arduino(1, 3, 5, 7, 6) 
