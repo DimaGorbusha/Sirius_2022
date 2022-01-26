@@ -5,6 +5,7 @@
 import pymysql
 from loggers import *
 from time import sleep
+import json
 
 global connection
 
@@ -72,27 +73,7 @@ def export_all_data():
             sql = "SELECT * FROM tests"
             # выполняем запрос
             cursor.execute(sql)
-            # Возвращаем словарь сo всеми записями
-            all_data = cursor.fetchall()
-            list_data = {}
-            for data in all_data:
-                res = {
-                    'test_id': data[0],
-                    'duration': data[1],
-                    'borehole': data[2],
-                    'imp_mode': data[3],
-                    'before_time': data[4],
-                    'status': data[5],
-                    'time_after_start': data[6],
-                    'akb_voltage': data[7],
-                    'pressure': data[8],
-                    'tank_temp': data[9],
-                    'engine_wall_temp': data[10],
-                    'valve_temp': data[11],
-                    'valve_current': data[12],
-                    'heating_current': data[13]
-                }
-                list_data.add(res)
+            list_data = json.dumps(cursor.fetchall)
             return list_data
 
     except Exception as error:
