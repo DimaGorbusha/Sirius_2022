@@ -61,24 +61,29 @@ def write_parametrs(duration, borehole_opn, borehole_cls, before_time):
 def read_arduino(duration, borehole_opn, borehole_cls, before_time, status):
     global ser
     global test_id
-    test_id += 1 
-    
+    test_id += 1
     ser.flush()
     log_data = str(duration) + " " + str(borehole_opn) + " " + \
     str(borehole_cls) + " " + str(before_time) + " " + str(status) 
+    
+    write_parametrs(duration, borehole_opn, borehole_cls, before_time)
 
-    data = ser.readline().decode('utf-8').rstrip()
-    data_logger_write(data, 1)
-    data = list(data.split())
+    while True:
+        if ser.in_waiting > 0:
+            data = ser.readline().decode('utf-8').rstrip()
+            data = list(data.split())
 
-    for i in range(len(data)):
-        log_data += data[i] + " "
+            if data == "stop":
+                break
 
-    insert_data(duration, borehole_opn, borehole_cls, before_time, status, \
-    data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
-    data[7])
+            for i in range(len(data)):
+                log_data += data[i] + " "
 
-    data_logger_write(log_data, test_id)
+            insert_data(duration, borehole_opn, borehole_cls, before_time, status, \
+            int(data[0]), float(data[1]), float(data[2]), float(data[3]), float(data[4]), float(data[5]), float(data[6]), \
+            float(data[7]))
+
+            data_logger_write(log_data, test_id)
 
 
 def start_engine():

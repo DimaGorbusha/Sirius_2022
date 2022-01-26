@@ -1,4 +1,4 @@
-#-------------------Протокол UART-------------------
+"""#-------------------Протокол UART-------------------
 import serial
 import sys
 import time
@@ -84,3 +84,4 @@ def stop_engine():
 
 
 #serial_port_setup(115200, list(find_serial_ports()))
+"""
