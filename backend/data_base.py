@@ -16,7 +16,8 @@ def DB_connect():
                                  user='bd_uzver',  # admin
                                  password='123',  # AdmIn//1857
                                  db='bd_uzver',  # bebrochk
-                                 autocommit=True)
+                                 autocommit=True,
+                                 cursorclass=pymysql.cursors.DictCursor)
 
 
 def create_table():
@@ -68,7 +69,7 @@ def export_all_data():
     # открываем соединение с бд, чтобы записывать изменения
     DB_connect()
     try:
-        with connection.cursor(pymysql.cursors.DictCursor) as cursor:
+        with connection.cursor() as cursor:
             # запрос
             sql = "SELECT * FROM tests"
             # выполняем запрос
@@ -82,6 +83,7 @@ def export_all_data():
         # возвращаем содержание ошибки
         return error
     finally:
+        connection.commit()
         # закрытие соединения с бд
         connection.close()
 
