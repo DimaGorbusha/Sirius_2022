@@ -1,13 +1,13 @@
 # ----------------------main----------------------
+from asyncio.windows_events import NULL
 from flask import Flask, url_for, render_template, session, redirect, request
 from data_base import export_all_data
-from raspi_data import read_arduino, stop_engine, start_engine
+from raspi_data import read_arduino, stop_engine, start_engine, find_serial_ports, serial_port_setup
 from loggers import *
 from flask_cors import CORS, cross_origin
 from data_base import export_data_json
 from time import sleep
 from data_base import export_data_json
-
 
 app = Flask(__name__)
 CORS(app)
@@ -45,7 +45,7 @@ def create_test():
             test_borehole_opn = request.form["borehole_opn"]
             test_heat_time = request.form["heating_time"]
             test_borehole_cls = request.form["borehole_cls"]
-            test_status = "Выполняется"
+            test_status = NULL
             read_arduino(test_duration, test_borehole_opn,
                          test_heat_time, test_borehole_cls, test_status)
             sleep(1)
@@ -54,10 +54,9 @@ def create_test():
         test_borehole_opn = request.form["borehole_opn"]
         test_heat_time = request.form["heating_time"]
         test_borehole_cls = request.form["borehole_cls"]
-        test_status = "Завершён"
+        test_status = True
 
         read_arduino(test_duration, test_borehole_opn, test_heat_time, test_borehole_cls, test_status)
-        stop_engine()
 
 
 @app.route("/sign-up", methods=["POST", "GET"])
