@@ -51,14 +51,21 @@ def write_arduino(message):
     ser.write(message)
 
 
-def read_arduino(duration, borehole, imp_mode, before_time, status):
+def write_parametrs(duration, borehole_opn, borehole_cls, before_time):
+    write_arduino(duration)
+    write_arduino(borehole_opn)
+    write_arduino(borehole_cls)
+    write_arduino(before_time)
+
+
+def read_arduino(duration, borehole_opn, borehole_cls, before_time, status):
     global ser
     global test_id
     test_id += 1 
     
     ser.flush()
-    log_data = str(duration) + " " + str(borehole) + " " + \
-    str(imp_mode) + " " + str(before_time) + " " + str(status) 
+    log_data = str(duration) + " " + str(borehole_opn) + " " + \
+    str(borehole_cls) + " " + str(before_time) + " " + str(status) 
 
     data = ser.readline().decode('utf-8').rstrip()
     data_logger_write(data, 1)
@@ -67,7 +74,7 @@ def read_arduino(duration, borehole, imp_mode, before_time, status):
     for i in range(len(data)):
         log_data += data[i] + " "
 
-    insert_data(duration, borehole, imp_mode, before_time, status, \
+    insert_data(duration, borehole_opn, borehole_cls, before_time, status, \
     data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
     data[7])
 
