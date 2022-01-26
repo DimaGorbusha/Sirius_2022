@@ -25,7 +25,7 @@ def create_table():
         with connection.cursor() as cursor:
             cursor.execute("CREATE TABLE IF NOT EXISTS tests \
 			(test_id SMALLINT AUTO_INCREMENT PRIMARY KEY, \
-			duration SMALLINT, borehole SMALLINT, imp_mode DOUBLE, \
+			duration SMALLINT, brh_opn SMALLINT, brh_cls SMALLINT, \
 			before_time INT, status BOOLEAN, time_after_start SMALLINT, \
 			akb_voltage DOUBLE, pressure DOUBLE, tank_temp DOUBLE, engine_wall_temp DOUBLE, \
 			valve_temp DOUBLE, valve_current DOUBLE, heating_current DOUBLE)")
@@ -34,7 +34,7 @@ def create_table():
         connection.close()
 
 
-def insert_data(duration, borehole, imp_mode, before_time, status, time_after_start,
+def insert_data(duration, brh_opn, brh_cls, before_time, status, time_after_start,
                 akb_voltage, press, tank_temp, engine_wall_temp, valve_temp,
                 valve_current, heating_current):
 
@@ -42,8 +42,8 @@ def insert_data(duration, borehole, imp_mode, before_time, status, time_after_st
     try:
         with connection.cursor() as cursor:
             sql_query = "INSERT INTO tests (duration, \
-				borehole, \
-				imp_mode, \
+				brh_opn, \
+				brh_cls, \
 				before_time,\
 				status, \
 				time_after_start, \
@@ -56,7 +56,7 @@ def insert_data(duration, borehole, imp_mode, before_time, status, time_after_st
 				heating_current) \
 				VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             cursor.execute(sql_query,
-                           (duration, borehole, imp_mode, before_time, status,
+                           (duration, brh_opn, brh_cls, before_time, status,
                             time_after_start, akb_voltage, press, tank_temp, engine_wall_temp,
                             valve_temp, valve_current, heating_current))
 

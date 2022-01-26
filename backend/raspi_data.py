@@ -5,7 +5,7 @@ import time
 import glob
 from loggers import system_logger_write, data_logger_write
 from data_base import insert_data
-from data_base import return_data
+
 
 test_id = 1
 
@@ -34,6 +34,7 @@ def find_serial_ports():
 
 #----Функции логики----
 def serial_port_setup(baudrate, coms_arr):
+    global ser
     ser = serial.Serial()
     ser.baudrate = baudrate
     print(*coms_arr)
@@ -46,11 +47,13 @@ def serial_port_setup(baudrate, coms_arr):
 
 
 def write_arduino(message):
+    global ser
     ser.flush()
     ser.write(message)
 
 
 def read_arduino(duration, borehole, imp_mode, before_time, status):
+    global ser
     global test_id
     test_id += 1 
     
@@ -83,4 +86,4 @@ def stop_engine():
 
 
 serial_port_setup(115200, list(find_serial_ports()))
-json_data = read_arduino(1, 3, 5, 7, 6, 6, 8, 9)
+json_data = read_arduino(1, 3, 5, 7)

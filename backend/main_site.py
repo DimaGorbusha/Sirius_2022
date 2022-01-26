@@ -21,7 +21,7 @@ def index():
 @app.route("/list_tests", methods=['GET'])
 @cross_origin()
 def list_test():
-    data = export_all_data
+    data = export_all_data()
     return data
 
 
@@ -43,7 +43,7 @@ def create_test():
             test_borehole_opn = request.form["borehole_opn"]
             test_heat_time = request.form["heating_time"]
             test_borehole_cls = request.form["borehole_cls"]
-            test_status = NULL
+            test_status = None
             read_arduino(test_duration, test_borehole_opn,
                          test_heat_time, test_borehole_cls, test_status)
             sleep(1)
