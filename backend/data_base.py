@@ -67,7 +67,6 @@ def insert_data(duration, borehole, imp_mode, before_time, status, time_after_st
 def export_all_data():
     # открываем соединение с бд, чтобы записывать изменения
     DB_connect()
-    
     try:
         with connection.cursor(pymysql.cursors.DictCursor) as cursor:
             # запрос

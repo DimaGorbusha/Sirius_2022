@@ -6,7 +6,6 @@ from loggers import *
 from flask_cors import CORS, cross_origin
 from data_base import export_data_json
 from time import sleep
-from data_base import export_data_json
 
 app = Flask(__name__)
 CORS(app)
@@ -22,7 +21,7 @@ def index():
 @app.route("/list_tests", methods=['GET'])
 @cross_origin()
 def list_test():
-    data = {"tests": [export_all_data]}
+    data = export_all_data
     return data
 
 
