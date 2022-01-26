@@ -260,10 +260,13 @@ function TestDetail() {
         if (color == "#4DD15A") { //если старт
             setColor("red");
             setText("Стоп");
+            statusTest(true);
         } else { //если стоп
             setColor("#4DD15A");
             setText("Старт");
+            statusTest(false);
         }
+
     }
 
     //test upd
@@ -276,6 +279,21 @@ function TestDetail() {
     }
 
     //liveProcess()
+    let download_log = "/backend/test_data_log"+(lastIndex+1).toString()+".log"
+
+    const statusTest = (status) => {
+        //POST-запрос
+        fetch('https://localhost:5000/create-test', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                active: status
+            })
+        })
+    }
 
 
     return (
@@ -315,7 +333,7 @@ function TestDetail() {
                     }}
                         onClick={changeColor}>
                         <span style={styles.spanStart} >{text}</span></button>
-                    <button style={styles.btn_logs} ><span style={styles.spanStart} >Скачать лог</span></button>
+                    <a href={download_log} download><button style={styles.btn_logs} ><span style={styles.spanStart} >Скачать лог</span></button></a>
                 </div>
                 <div style={styles.graph}>
                     <HighchartsReact highcharts={Highcharts} options={options} />

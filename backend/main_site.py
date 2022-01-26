@@ -13,9 +13,15 @@ CORS(app)
 password = "17091857"
 
 
-@app.route("/")
+"""@app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html")"""
+
+
+@app.route("/test-status")
+def test_status():
+    if request.method == "POST":
+        if 
 
 
 @app.route("/list_tests", methods=['GET'])
