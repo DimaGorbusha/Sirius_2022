@@ -67,13 +67,32 @@ def insert_data(duration, borehole, imp_mode, before_time, status, time_after_st
 def export_all_data():
     # открываем соединение с бд, чтобы записывать изменения
     DB_connect()
+    #connection.row_factory = pymysql.Row
     try:
         with connection.cursor() as cursor:
             # запрос
             sql = "SELECT * FROM tests"
             # выполняем запрос
             cursor.execute(sql)
-            list_data = json.dumps(cursor.fetchall)
+            rows = cursor.fetchall()
+            list_data =[]
+            for row in rows:
+                list_data.append({
+                    'test_id':row["id"],
+                    'duration': row["duration"],
+                    'borehole': row["borehole"],
+                    'imp_mode': row["imp_mode"],
+                    'before_time': row["before_time"],
+                    'status': row["status"],
+                    'time_after_start': row["time_after_start"],
+                    'akb_voltage': row["akb_voltage"],
+                    'pressure': row["pressure"],
+                    'tank_temp': row["tank_temp"],
+                    'engine_wall_temp': row["engine_wall_temp"],
+                    'valve_temp': row["valve_temp"],
+                    'valve_current': row["valve_current"],
+                    'heating_current': row["heating_current"]
+                })
             return list_data
 
     except Exception as error:
