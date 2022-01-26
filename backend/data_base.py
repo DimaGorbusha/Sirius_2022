@@ -75,6 +75,7 @@ def export_all_data():
             # выполняем запрос
             cursor.execute(sql)
             rows = cursor.fetchall()
+            rows = json.dumps(rows)
             return rows
 
     except Exception as error:
