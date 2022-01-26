@@ -1,5 +1,4 @@
 # ----------------------main----------------------
-from asyncio.windows_events import NULL
 from flask import Flask, url_for, render_template, session, redirect, request
 from data_base import export_all_data
 from raspi_data import read_arduino, stop_engine, start_engine, find_serial_ports, serial_port_setup
