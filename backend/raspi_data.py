@@ -1,7 +1,6 @@
 #-------------------Протокол UART-------------------
 import serial
 import sys
-import time
 import glob
 from loggers import system_logger_write, data_logger_write
 from data_base import insert_data
