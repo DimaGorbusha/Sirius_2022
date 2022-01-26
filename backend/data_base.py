@@ -74,6 +74,7 @@ def export_all_data():
             cursor.execute(sql)
             # Возвращаем словарь сo всеми записями
             all_data = cursor.fetchall()
+            list_data = {}
             for data in all_data:
                 res = {
                     'test_id': data[0],
@@ -91,7 +92,8 @@ def export_all_data():
                     'valve_current': data[12],
                     'heating_current': data[13]
                 }
-            return res
+                list_data.add(res)
+            return list_data
 
     except Exception as error:
         # возвращаем содержание ошибки
