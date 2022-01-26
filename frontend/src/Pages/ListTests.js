@@ -21,7 +21,7 @@ function ListTests() {
                 return response.json()
             }
         }).then(data => {
-            setState(data.tests)
+            setState(data)
         })
             .then(error => console.log(error))
     }, [])
