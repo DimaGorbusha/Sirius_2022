@@ -83,7 +83,6 @@ def export_all_data():
         # возвращаем содержание ошибки
         return error
     finally:
-        connection.commit()
         # закрытие соединения с бд
         connection.close()
 
