@@ -148,4 +148,4 @@ def return_test_id(test_id):
 		connection.close()
 '''
 
-create_table()
+# create_table()
