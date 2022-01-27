@@ -1,5 +1,6 @@
 # ----------------------main----------------------
 from flask import Flask, render_template, session, request
+from data_base import insert_data
 from data_base import export_all_data
 from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
 from loggers import *
@@ -28,6 +29,7 @@ def test_status():
         if 
 """
 
+
 @app.route("/list_tests", methods=['GET'])
 @cross_origin()
 def list_test():
@@ -35,14 +37,25 @@ def list_test():
     return data
 
 
-@app.route("/test-detail/<int:test_number>", methods=["GET", "POST"])
+@app.route("/test-detail/<test_id>", methods=["GET", "POST"])
 def show_test_detail(test_id):
     data = export_data_json(test_id)
     return data
 
 
-@app.route("/create-test", methods=["POST", "GET"])
+@app.route("/create-test", methods=["POST"])
 def create_test():
+    # insert_data(23,242,24,34,True,35,235,325,325,235,325,235,352)
+    insert_data(request.json["duration"], request.json["brh_opn"],
+                request.json["brh_cls"], request.json["before_time"],
+                request.json["status"], request.json["time_after_start"], request.json["akb_voltage"],
+                request.json["press"], request.json["tank_temp"], request.json["engine_wall_temp"],
+                request.json["valve_temp"], request.json["valve_current"], request.json["heating_current"])
+    
+
+
+@app.route("/launch-test", methods=["POST", "GET"])
+def launch_test():
     if request.method == "POST":
         count = 0
         serial_port_setup(115200, find_serial_ports())
@@ -64,7 +77,8 @@ def create_test():
         test_borehole_cls = request.form["borehole_cls"]
         test_status = True
 
-        read_arduino(test_duration, test_borehole_opn, test_heat_time, test_borehole_cls, test_status)
+        read_arduino(test_duration, test_borehole_opn,
+                     test_heat_time, test_borehole_cls, test_status)
 
 
 @app.route("/sign-up", methods=["POST", "GET"])

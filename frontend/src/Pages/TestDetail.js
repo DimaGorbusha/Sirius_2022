@@ -8,6 +8,8 @@ import { Link } from "react-router-dom"
 
 function TestDetail() {
 
+    let current_index = Number(window.location.pathname.toString().replace('/test-detail/', '')) - 1;
+
     const styles = {
         h1: {
             marginLeft: '90px',
@@ -92,7 +94,7 @@ function TestDetail() {
             borderColor: 'white',
             fontSize: '2vw',
             width: '20vw',
-            height: 'minHeight',
+            height: '60px',
             marginTop: '15px',
             textColor: 'white',
             textDecoration: 'none'
@@ -103,35 +105,34 @@ function TestDetail() {
     let [data_tests, setDataTests] = useState({})
     //let [isLoggedIn, setIsLoggedIn] = useState(false)
 
- 
-    
-    useEffect(()=> {
-        fetch("http://127.0.0.1:5000/list_tests", {
+
+    let link_ = "http://localhost:5000/test-detail/" + (current_index+1).toString()
+   
+    useEffect(() => {
+        fetch(link_, {
             method: 'GET'
         }).then(response => {
             if (response.status == 200) {
                 return response.json()
             }
         }).then(data => {
-            setDataTests(data.tests)
-            //setIsLoggedIn(data.isLogged)
+            setDataTests(data)
         })
             .then(error => console.log(error))
     }, [])
 
-    let tests = [];
-    tests = data_tests;
-    const [display, setDisplay]= useState('block')
+    let tests = data_tests;
+    const [display, setDisplay] = useState('block')
 
-    function checkLoggin(is_login){
-        if (is_login == true){
+    function checkLoggin(is_login) {
+        if (is_login == true) {
             setDisplay('block')
-        }else{
+        } else {
             setDisplay('none')
         }
     }
     //checkLoggin(isLoggedIn)
-    
+
     const options = {
         title: {
             text: 'График'
@@ -206,38 +207,34 @@ function TestDetail() {
         ]
     }
 
-    let current_index = Number(window.location.pathname.toString().replace('/test-detail/', '')) - 1;
 
 
 
+    /*
     function showDetail(index) {
         let current_res = tests[index];
         return current_res;
     }
+    */
 
     let duration = "Нет данных"
     let duty_cycle = "Нет данных"
     let preheat_time = "Нет данных"
-    let [pulse_period, setPulse_period] = useState('Нет данных')
+    let pulse_period = 'Нет данных'
     let is_successfull = "Нет данных"
     let status_success = 'Неизвестно'
-        
+
 
 
     try {
-        if (current_index < tests.length) {
-
-            duration = showDetail(current_index).duration.toString()
-            duty_cycle = showDetail(current_index).duty_cycle.toString()
-            preheat_time = showDetail(current_index).preheat_time.toString()
-            pulse_period = showDetail(current_index).pulse_period.toString()
-            //setPulse_period(data)
-            is_successfull = showDetail(current_index).is_successfull
-            if (is_successfull == true) {
-                status_success = 'Успешен';
-            } else if (is_successfull == false) {
-                status_success = 'Прерван';
-            }
+        duration = tests.duration.toString()
+        duty_cycle = tests.brh_opn.toString()
+        preheat_time = tests.before_time.toString()
+        pulse_period = tests.valve_temp.toString()
+        if (tests.status == true){
+            status_success = 'Успешно'
+        }else if (tests.status == false){
+            status_success ='Неудачно'
         }
     } catch (e) {
         duration = "Нет данных"
@@ -247,10 +244,6 @@ function TestDetail() {
 
 
     }
-
-
-
-    
 
     let [color, setColor] = useState('#4DD15A');
     let [textColor, setTextColor] = useState('white');
@@ -274,14 +267,14 @@ function TestDetail() {
 
         setInterval(() => {
             let data = new Date().getSeconds().toString()
-            setPulse_period(data)  //тест чтобы проверить как обновляется
+            pulse_period = data//тест чтобы проверить как обновляется
         }, 1000)
     }
 
     //liveProcess()
-    let download_log = "/data_log"+(current_index+1).toString()+".log"
-    
-    const statusTest = (status) => {
+    let download_log = "/logs/data_log" + (current_index + 1).toString() + ".log"
+
+    function statusTest(status) {
         //POST-запрос
         fetch('https://localhost:5000/create-test', {
             method: 'POST',
@@ -300,7 +293,7 @@ function TestDetail() {
         <div>
             <header>
                 <h1 style={styles.h1}>Двигатель для <span className="part_title" style={styles.part_title}>
-                        <Link style={styles.part_title} to='/list-tests'>наноспутника</Link> </span>
+                    <Link style={styles.part_title} to='/list-tests'>наноспутника</Link> </span>
                 </h1>
             </header>
             <div className="containerTest" style={styles.containerTest}>
@@ -333,7 +326,10 @@ function TestDetail() {
                     }}
                         onClick={changeColor}>
                         <span style={styles.spanStart} >{text}</span></button>
-                    <a href={download_log} download><button style={styles.btn_logs} ><span style={styles.spanStart} >Скачать лог</span></button></a>
+                    <a style={{
+                        marginLeft: 'auto',
+                        height: '60px'
+                    }} href={download_log} download><button style={styles.btn_logs} ><span style={styles.spanStart} >Скачать лог</span></button></a>
                 </div>
                 <div style={styles.graph}>
                     <HighchartsReact highcharts={Highcharts} options={options} />
