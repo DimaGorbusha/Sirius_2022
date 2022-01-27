@@ -42,11 +42,13 @@ def show_test_detail(test_id):
 @app.route("/create-test", methods=["POST"])
 def create_test():
     # insert_data(23,242,24,34,True,35,235,325,325,235,325,235,352)
-    insert_data(request.json["duration"], request.json["brh_opn"],
-                request.json["brh_cls"], request.json["before_time"],
-                request.json["status"], request.json["time_after_start"], request.json["akb_voltage"],
-                request.json["press"], request.json["tank_temp"], request.json["engine_wall_temp"],
-                request.json["valve_temp"], request.json["valve_current"], request.json["heating_current"])
+    insert_data(request.json["duration"], request.json["brh_opn"], 
+                request.json["brh_cls"], request.json["before_time"], 
+                request.json["status"], request.json["time_after_start"],
+                request.json["akb_voltage"],request.json["press"],
+                request.json["tank_temp"], request.json["engine_wall_temp"],
+                request.json["valve_temp"], request.json["valve_current"],
+                request.json["heating_current"])
     
 
 
