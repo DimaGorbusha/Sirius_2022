@@ -149,6 +149,3 @@ def return_test_id(test_id):
 '''
 
 create_table()
-insert_data(43, 12, 33, 41, True, 21,
-            22.0, 44.55, 78.66, 797.00066, 120555.69,
-            666.666, 789.999)

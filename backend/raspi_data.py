@@ -4,13 +4,11 @@ import sys
 import glob
 from loggers import system_logger_write, data_logger_write
 from data_base import insert_data
-#from data_base import return_data
 
 test_id = 1
 
 #----Поиск открытых портов----
 def find_serial_ports():
-    system_logger_write("COM-ports searching")
     if sys.platform.startswith('win'):
         ports = ['COM%s' % (i + 1) for i in range(256)]
     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
@@ -36,19 +34,12 @@ def serial_port_setup(baudrate, coms_arr):
     global ser
     ser = serial.Serial()
     ser.baudrate = baudrate
-    print(*coms_arr)
     ser.port = coms_arr[0]
     str = "Selected: "
     str += coms_arr[0]
     system_logger_write(str)
     del str
     ser.open()
-
-
-def write_arduino(message):
-    global ser
-    ser.flush()
-    ser.write(message)
 
 
 def write_parametrs(duration, borehole_opn, borehole_cls, before_time):
@@ -58,11 +49,21 @@ def write_parametrs(duration, borehole_opn, borehole_cls, before_time):
     write_arduino(before_time)
 
 
+def write_arduino(message):
+    global ser
+    ser.write(message)
+
+
+def start_engine():
+    system_logger_write("Start engine")
+    write_arduino(b'f')
+
+
+
 def read_arduino(duration, borehole_opn, borehole_cls, before_time, status):
     global ser
     global test_id
     test_id += 1
-    ser.flush()
     log_data = str(duration) + " " + str(borehole_opn) + " " + \
     str(borehole_cls) + " " + str(before_time) + " " + str(status) 
     
@@ -86,16 +87,23 @@ def read_arduino(duration, borehole_opn, borehole_cls, before_time, status):
             data_logger_write(log_data, test_id)
 
 
-def start_engine():
-    system_logger_write("Start engine")
-    write_arduino("f")
-
-
 def stop_engine():
     system_logger_write("Engine stop")
     write_arduino("s")
 
 
-serial_port_setup(115200, list(find_serial_ports()))
+def test():
+    global test_id
+    if ser.in_waiting > 0:
+        data = ser.readline().decode('utf-8').rstrip()
+        data = list(data.split())
 
-json_data = read_arduino(1, 3, 5, 7, 6) 
+
+        log_data = "22" + " " + "55" + " " + \
+        "55" + " " + "44" + " " + "65"
+
+        for i in range(len(data)):
+                    log_data += data[i] + " "
+
+        data_logger_write(log_data, test_id)
+
