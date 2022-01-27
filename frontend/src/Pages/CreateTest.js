@@ -110,7 +110,7 @@ function CreateTest() {
                 return response.json()
             }
         }).then(data => {
-            setState(data.tests)
+            setState(data)
         })
             .then(error => console.log(error))
     }, [])
@@ -141,10 +141,10 @@ function CreateTest() {
             body: JSON.stringify({
                 test_id: (lastIndex + 1),
                 duration: duration,
-                preheat_time: preheat_time,
-                duty_cycle: duty_cycle,
-                pulse_period: pulse_period,
-                status_success: null
+                brh_opn: preheat_time,
+                brh_cls: duty_cycle,
+                before_time: pulse_period,
+                status: null
             })
         })
     }
@@ -204,7 +204,7 @@ function CreateTest() {
 
 
             </div>
-            <Link to={link}>
+            <Link to={link} onClick={sendData}>
                 <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit" onClick={sendData}>
                     <span style={styles.spanStart}>
                         Старт

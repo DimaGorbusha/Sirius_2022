@@ -106,9 +106,10 @@ function TestDetail() {
     //let [isLoggedIn, setIsLoggedIn] = useState(false)
 
 
-    let link = "http://127.0.0.1:5000/test-detail/" + (current_index).toString()
+    let link_ = "http://localhost:5000/test-detail/" + (current_index+1).toString()
+   
     useEffect(() => {
-        fetch(link, {
+        fetch(link_, {
             method: 'GET'
         }).then(response => {
             if (response.status == 200) {
@@ -116,13 +117,11 @@ function TestDetail() {
             }
         }).then(data => {
             setDataTests(data)
-            //setIsLoggedIn(data.isLogged)
         })
             .then(error => console.log(error))
     }, [])
 
-    let tests = [];
-    tests = data_tests;
+    let tests = data_tests;
     const [display, setDisplay] = useState('block')
 
     function checkLoggin(is_login) {
@@ -221,7 +220,7 @@ function TestDetail() {
     let duration = "Нет данных"
     let duty_cycle = "Нет данных"
     let preheat_time = "Нет данных"
-    let [pulse_period, setPulse_period] = useState('Нет данных')
+    let pulse_period = 'Нет данных'
     let is_successfull = "Нет данных"
     let status_success = 'Неизвестно'
 
@@ -229,15 +228,13 @@ function TestDetail() {
 
     try {
         duration = tests.duration.toString()
-        duty_cycle = tests.borehole_opn.toString()
-        preheat_time = tests.heating_time.toString()
-        pulse_period = tests.pulse_period.toString()
-        //setPulse_period(data)
-        is_successfull = tests.status
-        if (is_successfull == true) {
-            status_success = 'Успешен';
-        } else if (is_successfull == false) {
-            status_success = 'Прерван';
+        duty_cycle = tests.brh_opn.toString()
+        preheat_time = tests.before_time.toString()
+        pulse_period = tests.valve_temp.toString()
+        if (tests.status == true){
+            status_success = 'Успешно'
+        }else if (tests.status == false){
+            status_success ='Неудачно'
         }
     } catch (e) {
         duration = "Нет данных"
@@ -270,7 +267,7 @@ function TestDetail() {
 
         setInterval(() => {
             let data = new Date().getSeconds().toString()
-            setPulse_period(data)  //тест чтобы проверить как обновляется
+            pulse_period = data//тест чтобы проверить как обновляется
         }, 1000)
     }
 
