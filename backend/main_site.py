@@ -8,6 +8,10 @@ from flask_cors import CORS, cross_origin
 from data_base import export_data_json
 from time import sleep
 
+
+
+
+
 app = Flask(__name__)
 CORS(app)
 

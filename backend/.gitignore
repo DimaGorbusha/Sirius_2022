@@ -3,3 +3,5 @@ system_log.log
 /test_arduino
 /main.py
 raspi_test.py
+lukoshko.py
+system_log.log
