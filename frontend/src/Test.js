@@ -10,7 +10,7 @@ function Test(props) {
         <div>
             {
                 props.tests.map((test, index) => {
-                    return <TestItem test={test} key={test.id} index={index} is_successfull={test.is_successfull} duration={test.duration} duty_cycle={test.duty_cycle} preheat_time={test.preheat_time} pulse_period={test.pulse_period} />
+                    return <TestItem test={test} key={test.id} index={index} is_successfull={test.status} duration={test.duration} duty_cycle={test.duty_cycle} preheat_time={test.preheat_time} pulse_period={test.pulse_period} />
                 })
             }
         </div>

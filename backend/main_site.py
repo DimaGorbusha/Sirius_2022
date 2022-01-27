@@ -31,7 +31,7 @@ def list_test():
     return data
 
 
-@app.route("/test-detail/<int:test_number>", methods=["GET", "POST"])
+@app.route("/test-detail/<test_id>", methods=["GET", "POST"])
 def show_test_detail(test_id):
     data = export_data_json(test_id)
     return data

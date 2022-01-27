@@ -93,29 +93,17 @@ def export_data_json(data_test_id):
         with connection.cursor() as cursor:
             cursor.execute(
                 "SELECT * FROM tests WHERE test_id = {}".format(data_test_id))
-            data = cursor.fetchone()
-            data_json = {
-                'test_id': data[0],
-                'duration': data[1],
-                'borehole': data[2],
-                'imp_mode': data[3],
-                'before_time': data[4],
-                'status': data[5],
-                'time_after_start': data[6],
-                'akb_voltage': data[7],
-                'pressure': data[8],
-                'tank_temp': data[9],
-                'engine_wall_temp': data[10],
-                'valve_temp': data[11],
-                'valve_current': data[12],
-                'heating_current': data[13]
-            }
+            data_json = cursor.fetchone()
+            res_data_json = json.dumps(data_json)
             sleep(1)
+            return res_data_json
 
+    except Exception as error:
+        return error
     finally:
         connection.close()
 
-    return data_json
+    
 
 
 """
@@ -149,3 +137,4 @@ def return_test_id(test_id):
 '''
 
 create_table()
+#insert_data(23,242,24,34,True,35,235,325,325,235,325,235,352)

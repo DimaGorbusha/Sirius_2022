@@ -106,7 +106,7 @@ function TestDetail() {
     //let [isLoggedIn, setIsLoggedIn] = useState(false)
 
 
-    let link = "http://127.0.0.1:5000/test-detail/" + current_index.toString()
+    let link = "http://127.0.0.1:5000/test-detail/" + (current_index).toString()
     useEffect(() => {
         fetch(link, {
             method: 'GET'
@@ -228,19 +228,16 @@ function TestDetail() {
 
 
     try {
-        if (current_index < tests.length) {
-
-            duration = data_tests.duration.toString()
-            duty_cycle = data_tests.borehole_opn.toString()
-            preheat_time = data_tests.heating_time.toString()
-            pulse_period = data_tests.pulse_period.toString()
-            //setPulse_period(data)
-            is_successfull = data_tests.is_successfull
-            if (is_successfull == true) {
-                status_success = 'Успешен';
-            } else if (is_successfull == false) {
-                status_success = 'Прерван';
-            }
+        duration = tests.duration.toString()
+        duty_cycle = tests.borehole_opn.toString()
+        preheat_time = tests.heating_time.toString()
+        pulse_period = tests.pulse_period.toString()
+        //setPulse_period(data)
+        is_successfull = tests.status
+        if (is_successfull == true) {
+            status_success = 'Успешен';
+        } else if (is_successfull == false) {
+            status_success = 'Прерван';
         }
     } catch (e) {
         duration = "Нет данных"
@@ -332,7 +329,7 @@ function TestDetail() {
                     }}
                         onClick={changeColor}>
                         <span style={styles.spanStart} >{text}</span></button>
-                    <a style = {{
+                    <a style={{
                         marginLeft: 'auto',
                         height: '60px'
                     }} href={download_log} download><button style={styles.btn_logs} ><span style={styles.spanStart} >Скачать лог</span></button></a>
