@@ -1,15 +1,12 @@
 # ----------------------main----------------------
-from flask import Flask, render_template, session, request
+from flask import Flask, render_template, session, request, jsonify
 from data_base import insert_data
 from data_base import export_all_data
-from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
+#from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
 from loggers import *
 from flask_cors import CORS, cross_origin
 from data_base import export_data_json
 from time import sleep
-
-
-
 
 
 app = Flask(__name__)
@@ -43,17 +40,18 @@ def show_test_detail(test_id):
     return data
 
 
-@app.route("/create-test", methods=["POST"])
+@app.route("/create_test", methods=["POST"])
 def create_test():
     # insert_data(23,242,24,34,True,35,235,325,325,235,325,235,352)
-    insert_data(request.json["duration"], request.json["brh_opn"], 
-                request.json["brh_cls"], request.json["before_time"], 
-                request.json["status"], request.json["time_after_start"],
-                request.json["akb_voltage"],request.json["press"],
-                request.json["tank_temp"], request.json["engine_wall_temp"],
-                request.json["valve_temp"], request.json["valve_current"],
-                request.json["heating_current"])
-    
+    data = request.get_json()
+    print(str(data))
+    insert_data(
+        data['duration'], data['preheat_time'],
+        data['duty_cycle'], data['pulse_period'],
+        None, None, None, None, None, None, None, None,
+        None
+    )
+    return str(data)
 
 
 @app.route("/launch-test", methods=["POST", "GET"])

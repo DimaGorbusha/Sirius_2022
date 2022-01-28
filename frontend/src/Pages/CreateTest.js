@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { BrowserRouter as Redirect } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function CreateTest() {
 
@@ -125,34 +126,43 @@ function CreateTest() {
 
     const link = "/test-detail/" + (lastIndex + 1).toString()
 
-    const [duration, setDuration] = useState('30');
-    const [preheat_time, setPreheatTime] = useState('40');
-    const [duty_cycle, setDutyCycle] = useState('50');
-    const [pulse_period, setPulsePeriod] = useState('60');
+    const [duration, setDuration] = useState(30);
+    const [preheat_time, setPreheatTime] = useState(40);
+    const [duty_cycle, setDutyCycle] = useState(50);
+    const [pulse_period, setPulsePeriod] = useState(60);
+
+    const preset = { duration, preheat_time, duty_cycle, pulse_period };
+    
+    const api = axios.create({
+        baseURL: 'http://localhost:5000/'
+    })
+
+    const createData = async () => {
+        let res = await api.post('/create_test', {
+            duration: duration,
+            preheat_time: preheat_time,
+            duty_cycle: duty_cycle,
+            pulse_period: pulse_period
+        })
+        console.log(res)
+    }
+    
 
     const sendData = () => {
         //POST-запрос
-        fetch("https://localhost:5000/create-test", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                duration: 1,
-                brh_opn: 2,
-                brh_cls: 3,
-                before_time: 4,
-                status: null,
-                time_after_start: 5,
-                akb_voltage: 6,
-                press: 7,
-                tank_temp: 8,
-                engine_wall_temp: 9,
-                valve_temp: 10,
-                valve_current: 11,
-                heating_current: 12
-            })
-        })
+
+        
+
+        // fetch("https://localhost:5000/create-test", {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(preset)
+        // }).then(() => {
+        //     console.log("sent successfull")
+        // })
+
     }
 
 
@@ -185,7 +195,7 @@ function CreateTest() {
                 <div>
                     <div style={styles.containerID}>
                         <h1>Продолжительность</h1>
-                        <input name="duration" style={styles.input_data} placeholder="Введите число" type="number" value={duration} onChange={(event) => setDuration(event.target.value)}></input>
+                        <input name="duration" style={styles.input_data} method="POST" placeholder="Введите число" type="number" value={duration} onChange={(event) => setDuration(event.target.value)}></input>
                         <span style={{ marginLeft: '1em' }}>С</span>
                     </div>
                     <div style={styles.containerID}>
@@ -210,13 +220,16 @@ function CreateTest() {
 
 
             </div>
-            <Link to={link} onClick={sendData}>
-                <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit" onClick={sendData}>
+
+            <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit" onClick={createData} method="POST">
+                <Link to={link} onClick={createData} >
                     <span style={styles.spanStart}>
                         Старт
                     </span>
-                </button>
-            </Link>
+                </Link>
+            </button>
+
+
 
 
         </div>
