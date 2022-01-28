@@ -2,7 +2,7 @@
 from flask import Flask, render_template, session, request, jsonify
 from data_base import insert_data
 from data_base import export_all_data
-#from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
+from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
 from loggers import *
 from flask_cors import CORS, cross_origin
 from data_base import export_data_json
