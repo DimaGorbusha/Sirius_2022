@@ -1,19 +1,12 @@
 #-------------------Протокол UART-------------------
 import serial
-import time
+from time import sleep
 import sys
 import glob
 from loggers import system_logger_write, data_logger_write
 # from data_base import insert_data
 
 test_id = 1
-
-
-dur = 5
-bh_opn = 80
-bh_cls = 20
-bfr_ht_time = 10
-
 
 #----Поиск открытых портов----
 def find_serial_ports():
@@ -51,12 +44,10 @@ def serial_port_setup(baudrate, coms_arr):
     ser.open()
 
 
-def write_arduino_arr(msg_arr):
+def write_arduino_arr(data):
     global ser
-    data = bytearray(len(msg_arr))
     for i in range(len(data)):
-        data[i] = int(msg_arr[i])
-    ser.write(data)
+        ser.write((str(data[i])  + "\n").encode())
 
 
 def write_arduino(msg):
@@ -64,46 +55,51 @@ def write_arduino(msg):
     ser.write(msg.encode())
 
 
-def start_engine():
+"""def start_engine():
     system_logger_write("Start engine")
-    write_arduino(b'f')
+    write_arduino(b'f')"""
 
 
 def read_arduino(duration, borehole_opn, borehole_cls, before_time, status):
-    global data
     global ser
     global test_id
-    global sending_package
     test_id += 1
-    log_data = str(duration) + " " + str(borehole_opn) + " " + \
-    str(borehole_cls) + " " + str(before_time) + " " + str(status) 
+
+    count = 0
 
     data = [duration, borehole_opn, borehole_cls, before_time]
 
-    write_arduino_arr(data) # Отправка массива параметров на ардуино
-    time.sleep(0.1) # Время на отправку
-
-    while True:
+    while count != duration:
+        print("ЦИКЛ")
+        sleep(2)
+        write_arduino_arr(data)
         if ser.in_waiting > 0: # Ожидаем данные
-            data = ser.readline().decode('utf-8').rstrip()
-            data = list(data.split())
+            print("ДАННЫЕ ПОЛУЧЕНЫ")
+            recieve_data = ser.readline().decode('utf-8').rstrip()
+            # recieve_data_arr = list(recieve_data.split())
+            print(recieve_data)
 
-            if data[0] == "stop":
-                break
-
-            for i in range(len(data)):
-                log_data += data[i] + " "
-
-            """insert_data(duration, borehole_opn, borehole_cls, before_time, status, \
-            int(data[0]), float(data[1]), float(data[2]), float(data[3]), float(data[4]), float(data[5]), float(data[6]), \
-            float(data[7]))"""
+            log_data = str(duration) + " " + str(borehole_opn) + " " + \
+            str(borehole_cls) + " " + str(before_time) + " " + str(status) + " " + recieve_data
 
             data_logger_write(log_data, test_id)
+
+            """if recieve_data == "stop":
+                stop_engine()
+                return"""
+
+            log_data = ""
+
+            """insert_data(duration, borehole_opn, borehole_cls, before_time, status, \
+            int(recieve_data[0]), float(recieve_data[1]), float(recieve_data[2]), float(recieve_data[3]), float(recieve_data[4]), float(recieve_data[5]), float(recieve_data[6]), \
+            float(recieve_data[7]))"""
+
+
 
 
 def stop_engine():
     system_logger_write("Engine stop")
-    write_arduino(b's')
+    write_arduino('s')
 
 
 """def test():
@@ -117,7 +113,7 @@ def stop_engine():
         "55" + " " + "44" + " " + "65"
 
         for i in range(len(data)):
-                    log_data += data[i] + " "
+                    log_data += str(data[i]) + " "
 
         data_logger_write(log_data, test_id)
 
@@ -130,4 +126,12 @@ serial_port_setup(115200, find_serial_ports())
 
 read_arduino(5, 80, 20, 10, True)
 
+"""transmit_data = [5, 80, 20, 10]
 
+while True:
+    ser.flush()
+    write_arduino_arr(transmit_data)
+    if ser.in_waiting > 0:
+        rec_data = ser.readline().decode('utf-8').rstrip()
+        print(rec_data)
+        data_logger_write(rec_data, 1)"""

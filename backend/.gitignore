@@ -1,7 +1,9 @@
-system_log.log
+/logs
 /__pycache__
 /test_arduino
 /main.py
 raspi_test.py
 lukoshko.py
 system_log.log
+test.py
+raspi_data copy.py
