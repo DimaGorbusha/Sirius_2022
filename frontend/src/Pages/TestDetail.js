@@ -4,7 +4,7 @@ import HighchartsReact from 'highcharts-react-official'
 import ListTests from './ListTests'
 import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
-
+import axios from 'axios'
 
 function TestDetail() {
 
@@ -105,9 +105,23 @@ function TestDetail() {
     let [data_tests, setDataTests] = useState({})
     //let [isLoggedIn, setIsLoggedIn] = useState(false)
 
+    const api = axios.create({
+        baseURL: 'http://localhost:5000/'
+    })
 
-    let link_ = "http://localhost:5000/test-detail/" + (current_index+1).toString()
-   
+    const switchState = async () => {
+        let res = await api.post('/launch-test', {
+            duration: duration,
+            preheat_time: preheat_time,
+            duty_cycle: duty_cycle,
+            pulse_period: pulse_period,
+            status: null
+        })
+        console.log(res)
+    }
+
+    let link_ = "http://localhost:5000/test-detail/" + (current_index + 1).toString()
+
     useEffect(() => {
         fetch(link_, {
             method: 'GET'
@@ -221,20 +235,22 @@ function TestDetail() {
     let duty_cycle = "Нет данных"
     let preheat_time = "Нет данных"
     let pulse_period = 'Нет данных'
-    let is_successfull = "Нет данных"
+    //let is_successfull = "Нет данных"
     let status_success = 'Неизвестно'
 
 
 
     try {
-        duration = tests.duration.toString()
-        duty_cycle = tests.brh_opn.toString()
-        preheat_time = tests.before_time.toString()
-        pulse_period = tests.valve_temp.toString()
-        if (tests.status == true){
+        duration = tests.duration.toString() ?? "Нет данных"
+        duty_cycle = tests.brh_opn.toString() ?? "Нет данных"
+        preheat_time = tests.before_time.toString() ?? "Нет данных"
+        pulse_period = tests.brh_cls.toString() ?? "Нет данных"
+        if (tests.status == true && tests.status != null) {
             status_success = 'Успешно'
-        }else if (tests.status == false){
-            status_success ='Неудачно'
+        } else if (tests.status == false && tests.status != null) {
+            status_success = 'Неудачно'
+        } else {
+            status_success = 'Неизвестно'
         }
     } catch (e) {
         duration = "Нет данных"
@@ -253,11 +269,11 @@ function TestDetail() {
         if (color == "#4DD15A") { //если старт
             setColor("red");
             setText("Стоп");
-            statusTest(true);
+            switchState()
         } else { //если стоп
             setColor("#4DD15A");
             setText("Старт");
-            statusTest(false);
+            
         }
 
     }
@@ -274,19 +290,6 @@ function TestDetail() {
     //liveProcess()
     let download_log = "/logs/data_log" + (current_index + 1).toString() + ".log"
 
-    function statusTest(status) {
-        //POST-запрос
-        fetch('https://localhost:5000/create-test', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                active: status
-            })
-        })
-    }
 
 
     return (

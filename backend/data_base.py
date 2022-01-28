@@ -60,8 +60,35 @@ def insert_data(duration, brh_opn, brh_cls, before_time, status, time_after_star
                            (duration, brh_opn, brh_cls, before_time, status,
                             time_after_start, akb_voltage, press, tank_temp, engine_wall_temp,
                             valve_temp, valve_current, heating_current))
+            cursor.execute('ALTER TABLE tests AUTO_INCREMENT=1')
 
     finally:
+        connection.close()
+
+
+def update_data(test_id, duration, brh_opn, brh_cls, before_time, status,
+                time_after_start, akb_voltage, press, tank_temp, engine_wall_temp,
+                valve_temp, valve_current, heating_current):
+    # открываем соединение с бд, чтобы записывать изменения
+    DB_connect()
+    try:
+        with connection.cursor() as cursor:
+            # запрос
+            sql = "UPDATE tests SET duration = %s, brh_open = %s, brh_cls = %s, before_time = %s, \
+            status = %s, time_after_start = %s, akb_voltage = %s, press = %s, tank_temp = %s, engine_wall_temp = %s, \
+            valve_temp = %s, valve_current = %s, heating_current = %s WHERE test_id = %s"
+            # выполняем запрос
+            cursor.execute(sql, (duration, brh_opn, brh_cls, before_time, status,
+                                 time_after_start, akb_voltage, press, tank_temp, engine_wall_temp,
+                                 valve_temp, valve_current, heating_current, test_id))
+            # возвращаем результат
+            return True
+
+    except Exception as error:
+        # возвращаем содержание ошибки
+        return error
+    finally:
+        # закрытие соединения с бд
         connection.close()
 
 
@@ -103,8 +130,6 @@ def export_data_json(data_test_id):
     finally:
         connection.close()
 
-    
-
 
 """
 def return_test_id(test_id):
@@ -138,5 +163,4 @@ def return_test_id(test_id):
 
 
 create_table()
-#insert_data(23,242,24,34,True,35,235,325,325,235,325,235,352)
-
+# insert_data(23,242,24,34,True,35,235,325,325,235,325,235,352)

@@ -37,6 +37,7 @@ def list_test():
 @app.route("/test-detail/<test_id>", methods=["GET", "POST"])
 def show_test_detail(test_id):
     data = export_data_json(test_id)
+    print(str(data))
     return data
 
 
@@ -56,29 +57,36 @@ def create_test():
 
 @app.route("/launch-test", methods=["POST", "GET"])
 def launch_test():
-    if request.method == "POST":
-        count = 0
-        serial_port_setup(115200, find_serial_ports())
-        start_engine()
-        while count != int(request.form["duration"]) - 1:
-            count += 1
-            test_duration = request.form["duration"]
-            test_borehole_opn = request.form["borehole_opn"]
-            test_heat_time = request.form["heating_time"]
-            test_borehole_cls = request.form["borehole_cls"]
-            test_status = None
-            read_arduino(test_duration, test_borehole_opn,
-                         test_heat_time, test_borehole_cls, test_status)
-            sleep(1)
+    if request.method == 'POST':
+        data = request.get_json()
+        print(str(data))
+        read_arduino(data['duration'], data['duty_cycle'], data['pulse_period'], data['preheat_time'], data['status'])
+        return str(data)
+    
+    # if request.method == "POST":
+    #     count = 0
+    #     serial_port_setup(115200, find_serial_ports())
+    #     start_engine()
+    #     while count != int(request.form["duration"]) - 1:
+    #         count += 1
+    #         test_duration = request.form["duration"]
+    #         test_borehole_opn = request.form["borehole_opn"]
+    #         test_heat_time = request.form["heating_time"]
+    #         test_borehole_cls = request.form["borehole_cls"]
+    #         test_status = None
+    #         read_arduino(test_duration, test_borehole_opn,
+    #                      test_heat_time, test_borehole_cls, test_status)
+    #         sleep(1)
 
-        test_duration = request.form["duration"]
-        test_borehole_opn = request.form["borehole_opn"]
-        test_heat_time = request.form["heating_time"]
-        test_borehole_cls = request.form["borehole_cls"]
-        test_status = True
+    #     test_duration = request.form["duration"]
+    #     test_borehole_opn = request.form["borehole_opn"]
+    #     test_heat_time = request.form["heating_time"]
+    #     test_borehole_cls = request.form["borehole_cls"]
+    #     test_status = True
 
-        read_arduino(test_duration, test_borehole_opn,
-                     test_heat_time, test_borehole_cls, test_status)
+    #     read_arduino(test_duration, test_borehole_opn,
+    #                  test_heat_time, test_borehole_cls, test_status)
+    
 
 
 @app.route("/sign-up", methods=["POST", "GET"])
