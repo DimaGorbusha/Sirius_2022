@@ -2,7 +2,7 @@
 from flask import Flask, render_template, session, request, jsonify
 from data_base import insert_data
 from data_base import export_all_data
-from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
+#from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
 from loggers import *
 from flask_cors import CORS, cross_origin
 from data_base import export_data_json
@@ -58,12 +58,11 @@ def create_test():
 @app.route("/launch-test", methods=["POST", "GET"])
 def launch_test():
     if request.method == 'POST':
-        serial_port_setup(115200, find_serial_ports())
-        start_engine()
+        #serial_port_setup(115200, find_serial_ports())
+        #start_engine()
         data = request.get_json()
         print(str(data))
-        read_arduino(data['duration'], data['duty_cycle'],
-                     data['pulse_period'], data['preheat_time'], data['status'])
+        #read_arduino(data['duration'], data['duty_cycle'],data['pulse_period'], data['preheat_time'], data['status'])
         return str(data)
 
     # if request.method == "POST":
