@@ -31,6 +31,7 @@ def test_status():
 @cross_origin()
 def list_test():
     data = export_all_data()
+    print(str(data))
     return data
 
 
