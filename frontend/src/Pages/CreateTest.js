@@ -223,7 +223,7 @@ function CreateTest() {
             <Link to={link} >
                 <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit" onClick={createData} method="POST">
                     <span style={styles.spanStart}>
-                        Старт
+                        Создать
                     </span>
 
                 </button>
