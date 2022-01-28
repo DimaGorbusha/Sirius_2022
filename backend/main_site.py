@@ -58,11 +58,14 @@ def create_test():
 @app.route("/launch-test", methods=["POST", "GET"])
 def launch_test():
     if request.method == 'POST':
+        serial_port_setup(115200, find_serial_ports())
+        start_engine()
         data = request.get_json()
         print(str(data))
-        read_arduino(data['duration'], data['duty_cycle'], data['pulse_period'], data['preheat_time'], data['status'])
+        read_arduino(data['duration'], data['duty_cycle'],
+                     data['pulse_period'], data['preheat_time'], data['status'])
         return str(data)
-    
+
     # if request.method == "POST":
     #     count = 0
     #     serial_port_setup(115200, find_serial_ports())
@@ -86,7 +89,6 @@ def launch_test():
 
     #     read_arduino(test_duration, test_borehole_opn,
     #                  test_heat_time, test_borehole_cls, test_status)
-    
 
 
 @app.route("/sign-up", methods=["POST", "GET"])
