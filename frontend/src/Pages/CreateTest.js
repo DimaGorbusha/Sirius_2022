@@ -10,7 +10,7 @@ function CreateTest() {
     let navigate = useNavigate()
     const [is_login, setIsLogin] = useState(true)
 
-    
+
 
     function check(isLogin) {
         if (isLogin == false) {
@@ -28,7 +28,7 @@ function CreateTest() {
     }
 
     liveProcess()
-    
+
 
 
 
@@ -132,19 +132,25 @@ function CreateTest() {
 
     const sendData = () => {
         //POST-запрос
-        fetch('https://localhost:5000/create-test', {
+        fetch("https://localhost:5000/create-test", {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                test_id: (lastIndex + 1),
-                duration: duration,
-                brh_opn: preheat_time,
-                brh_cls: duty_cycle,
-                before_time: pulse_period,
-                status: null
+                duration: 1,
+                brh_opn: 2,
+                brh_cls: 3,
+                before_time: 4,
+                status: null,
+                time_after_start: 5,
+                akb_voltage: 6,
+                press: 7,
+                tank_temp: 8,
+                engine_wall_temp: 9,
+                valve_temp: 10,
+                valve_current: 11,
+                heating_current: 12
             })
         })
     }
