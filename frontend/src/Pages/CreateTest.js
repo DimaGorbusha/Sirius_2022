@@ -132,7 +132,7 @@ function CreateTest() {
     const [pulse_period, setPulsePeriod] = useState(60);
 
     const preset = { duration, preheat_time, duty_cycle, pulse_period };
-    
+
     const api = axios.create({
         baseURL: 'http://localhost:5000/'
     })
@@ -146,12 +146,12 @@ function CreateTest() {
         })
         console.log(res)
     }
-    
+
 
     const sendData = () => {
         //POST-запрос
 
-        
+
 
         // fetch("https://localhost:5000/create-test", {
         //     method: 'POST',
@@ -220,15 +220,14 @@ function CreateTest() {
 
 
             </div>
-
-            <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit" onClick={createData} method="POST">
-                <Link to={link} onClick={createData} >
+            <Link to={link} >
+                <button id="btnControl" className="btnControl" style={styles.btn_start} type="submit" onClick={createData} method="POST">
                     <span style={styles.spanStart}>
                         Старт
                     </span>
-                </Link>
-            </button>
 
+                </button>
+            </Link>
 
 
 
