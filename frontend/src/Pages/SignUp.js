@@ -5,6 +5,7 @@ import { useNavigate as UseNavigate } from 'react-router-dom'
 import { Router, Route, browserHistory } from 'react-router';
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { server_link } from '../Constants';
 
 const SignUp = () => {
 
@@ -58,7 +59,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   let isLoggedIn = false
   const api = axios.create({
-    baseURL: 'http://localhost:5000/'
+    baseURL: server_link
   })
 
   const sendPass = async () => {

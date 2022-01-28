@@ -5,6 +5,8 @@ import ListTests from './ListTests'
 import { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import axios from 'axios'
+import { server_link } from '../Constants'
+
 
 function TestDetail() {
 
@@ -106,7 +108,7 @@ function TestDetail() {
     //let [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const api = axios.create({
-        baseURL: 'http://localhost:5000/'
+        baseURL: server_link
     })
 
     const switchState = async () => {
@@ -120,7 +122,7 @@ function TestDetail() {
         console.log(res)
     }
 
-    let link_ = "http://localhost:5000/test-detail/" + (current_index + 1).toString()
+    let link_ = server_link+"/test-detail/" + (current_index + 1).toString()
 
     useEffect(() => {
         fetch(link_, {

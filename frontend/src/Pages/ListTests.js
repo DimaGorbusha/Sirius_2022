@@ -5,16 +5,16 @@ import Test from '../Test'
 import Context from '../Context'
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 import { Link } from "react-router-dom"
-
+import { server_link } from '../Constants'
 
 function ListTests() {
 
 
     let [state, setState] = useState({})
-
+    const link_list = server_link + "/list_tests"
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/list_tests", {
+        fetch(link_list, {
             method: 'GET'
         }).then(response => {
             if (response.status == 200) {
@@ -75,25 +75,25 @@ function ListTests() {
                     textDecoration: 'none',
                     marginLeft: 'auto'
                 }}>
-                <button style={{
-                    textDecoration:'none',
-                    marginLeft: 'auto',
-                    marginRight: '90px',
-                    backgroundColor: '#F2901D',
-                    borderRadius: '75px',
-                    fontFamily: 'Montserrat-Medium',
-                    borderWidth: '2px',
-                    borderStyle: 'solid',
-                    borderColor: 'white',
-                    fontSize: '2vw',
-                    width: '20vw',
-                    height: '2em',
-                    marginTop: '15px',
-                    textColor: 'white',
-                    textDecoration: 'none',
-                    display: display
-                }}><span style={styles.createTestTitle}>Создать тест</span>
-                </button>
+                    <button style={{
+                        textDecoration: 'none',
+                        marginLeft: 'auto',
+                        marginRight: '90px',
+                        backgroundColor: '#F2901D',
+                        borderRadius: '75px',
+                        fontFamily: 'Montserrat-Medium',
+                        borderWidth: '2px',
+                        borderStyle: 'solid',
+                        borderColor: 'white',
+                        fontSize: '2vw',
+                        width: '20vw',
+                        height: '2em',
+                        marginTop: '15px',
+                        textColor: 'white',
+                        textDecoration: 'none',
+                        display: display
+                    }}><span style={styles.createTestTitle}>Создать тест</span>
+                    </button>
                 </Link>
 
             </header>
