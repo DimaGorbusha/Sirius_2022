@@ -292,7 +292,14 @@ function TestDetail() {
 
 
     const updateData = async () => {
-        
+        let data = await api.get('/test-detail').then(({ data }) => data)
+        arr_valve.push(data.valve_current)
+        arr_temp1.push(data.tank_temp)
+        arr_temp2.push(data.engine_wall_temp)
+        arr_temp3.push(data.valve_temp)
+        arr_akb_klap.push(data.akb_voltage)
+        arr_press.push(data.pressure)
+        arr_amper_nagrev.push(data.akb_voltage)
     }
     //test upd
     function liveProcess() {
@@ -300,12 +307,12 @@ function TestDetail() {
         setInterval(() => {
             // let data = new Date().getSeconds().toString()
             // pulse_period = data//тест чтобы проверить как обновляется
-
+            updateData()
 
         }, 1000)
     }
 
-    //liveProcess()
+    liveProcess()
     let download_log = "/logs/data_log" + (current_index + 1).toString() + ".log"
 
 
