@@ -4,7 +4,7 @@ import time
 import sys
 import glob
 from loggers import system_logger_write, data_logger_write
-# from data_base import insert_data
+from data_base import insert_data
 
 test_id = 1
 
@@ -65,6 +65,8 @@ def read_arduino(duration, borehole_opn, borehole_cls, before_time, status):
     global test_id
     test_id += 1
 
+    serial_port_setup(115200, find_serial_ports())
+
     data = [duration, borehole_opn, borehole_cls, before_time]
 
     ser.flush()
@@ -98,15 +100,11 @@ def read_arduino(duration, borehole_opn, borehole_cls, before_time, status):
 
         data_logger_write(log_data, test_id)
 
-        """if recieve_data == "stop":
-            stop_engine()
-            return"""
-
         log_data = ""
 
-        """insert_data(duration, borehole_opn, borehole_cls, before_time, status, \
+        insert_data(duration, borehole_opn, borehole_cls, before_time, status, \
         int(recieve_data[0]), float(recieve_data[1]), float(recieve_data[2]), float(recieve_data[3]), float(recieve_data[4]), float(recieve_data[5]), float(recieve_data[6]), \
-        float(recieve_data[7]))"""
+        float(recieve_data[7]))
 
 
 def stop_engine():
@@ -133,10 +131,6 @@ def stop_engine():
     ser.flush()
     ser.write(data[0])"""
 
-
-serial_port_setup(115200, find_serial_ports())
-
-read_arduino(20, 10, 10, 10, True)
 
 """transmit_data = [5, 80, 20, 10]
 
