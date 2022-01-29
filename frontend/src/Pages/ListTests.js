@@ -6,6 +6,7 @@ import Context from '../Context'
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 import { Link } from "react-router-dom"
 import { server_link } from '../Constants'
+import axios from 'axios'
 
 function ListTests() {
 
@@ -26,9 +27,27 @@ function ListTests() {
             .then(error => console.log(error))
     }, [])
 
+    
+
     let tests = [];
     tests = state
+    let isLoggedIn = false
 
+    const api = axios.create({
+        baseURL: server_link
+    })
+
+    const getStatus = async () => {
+
+        let data = await api.get('/sign-up').then(({ data }) => {
+            data = data;
+            isLoggedIn = data.isLogged;
+        });
+        isLoggedIn = data.isLogged
+        console.log(data)
+        console.log(isLoggedIn)
+    }
+    getStatus()
     //let [isLoggedIn, setIsLoggedIn] = useState(false)
     const [display, setDisplay] = useState('block')
     function checkLoggin(is_login) {
