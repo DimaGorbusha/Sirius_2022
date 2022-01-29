@@ -67,6 +67,7 @@ def launch_test():
         #serial_port_setup(115200, find_serial_ports())
         # start_engine()
         data = request.get_json()
+        test_id = data['test_id']
         print(str(data))
         #read_arduino(data['duration'], data['duty_cycle'],data['pulse_period'], data['preheat_time'], data['status'])
         return str(data)

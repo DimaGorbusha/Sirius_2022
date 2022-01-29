@@ -113,6 +113,7 @@ function TestDetail() {
 
     const switchState = async () => {
         let res = await api.post('/launch-test', {
+            test_id: current_index,
             duration: duration,
             preheat_time: preheat_time,
             duty_cycle: duty_cycle,
