@@ -1,4 +1,5 @@
 # ----------------------main----------------------
+import json
 from flask import Flask, render_template, session, request, jsonify
 from data_base import insert_data
 from data_base import export_all_data
@@ -6,11 +7,12 @@ from data_base import export_all_data
 from loggers import *
 from flask_cors import CORS, cross_origin
 from data_base import export_data_json
-from flask_ngrok import run_with_ngrok 
+from flask_ngrok import run_with_ngrok
 from time import sleep
 
 app = Flask(__name__)
 run_with_ngrok(app)
+app.config['SECRET_KEY'] = '1114b9350df317fde757cd8a0befdc9bbd3e0aab'
 
 CORS(app)
 
@@ -52,8 +54,7 @@ def create_test():
     insert_data(
         data['duration'], data['preheat_time'],
         data['duty_cycle'], data['pulse_period'],
-        None, None, None, None, None, None, None, None,
-        None
+        True, 10, 46, 46, 23, 32, 23, 10, 20
     )
     return str(data)
 
@@ -62,7 +63,7 @@ def create_test():
 def launch_test():
     if request.method == 'POST':
         #serial_port_setup(115200, find_serial_ports())
-        #start_engine()
+        # start_engine()
         data = request.get_json()
         print(str(data))
         #read_arduino(data['duration'], data['duty_cycle'],data['pulse_period'], data['preheat_time'], data['status'])
@@ -96,13 +97,18 @@ def launch_test():
 @app.route("/sign-up", methods=["POST", "GET"])
 def sign_up():
 
-    #session["userLogged"] = False
-    
-    if session["userLogged"] == True:
+    if('userLogged' in session):
+        session['userLogged'] = session.get('userLogged')
+    elif ('userLogged' not in session):
+        session['userLogged'] = False
+        
+    if request.method == 'GET':
+        
         json_data = {
             "isLogged": session["userLogged"]
         }
-        return json_data
+        print(str(json_data))
+        return json.dumps(json_data)
 
     elif request.method == "POST":
         data = request.get_json()
@@ -112,7 +118,8 @@ def sign_up():
             json_data = {
                 "isLogged": session["userLogged"]
             }
-            return json_data
+            print(str(json_data))
+            return json.dumps(json_data)
 
 
 if __name__ == '__main__':

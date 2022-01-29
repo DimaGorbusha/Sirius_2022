@@ -122,7 +122,7 @@ function TestDetail() {
         console.log(res)
     }
 
-    let link_ = server_link+"/test-detail/" + (current_index + 1).toString()
+    let link_ = server_link + "/test-detail/" + (current_index + 1).toString()
 
     useEffect(() => {
         fetch(link_, {
@@ -148,6 +148,16 @@ function TestDetail() {
         }
     }
     //checkLoggin(isLoggedIn)
+
+    let arr_valve = []
+    let arr_temp1 = []
+    let arr_temp2 = []
+    let arr_temp3 = []
+    let arr_tyaga = []
+    let arr_speed = []
+    let arr_akb_klap = []
+    let arr_press = []
+    let arr_amper_nagrev = []
 
     const options = {
         title: {
@@ -176,47 +186,47 @@ function TestDetail() {
         },
 
         series: [{
-            data: [1, 2, 4, 8, 16, 32, 64, 128, 256, 512],
+            data: arr_valve,
             pointStart: 1,
             name: 'Напряжение'
         },
         {
-            data: [25, 546, 84, 165, 648, 23, 78787],
+            data: arr_temp1,
             pointStart: 1,
             name: 'Температура 1'
         },
         {
-            data: [13, 30, 40, 397, 94, 277, 155, 276],
+            data: arr_temp2,
             pointStart: 1,
             name: 'Температура 2'
         },
         {
-            data: [1, 30, 4, 97, 94, 27, 55, 76],
+            data: arr_temp3,
             pointStart: 1,
             name: 'Температура 3'
         },
         {
-            data: [91, 493, 90, 269, 34, 370, 442, 294],
+            data: arr_tyaga,
             pointStart: 1,
             name: 'Тяга'
         },
         {
-            data: [9, 93, 9, 69, 34, 70, 42, 24],
+            data: arr_speed,
             pointStart: 1,
             name: 'Скорость'
         },
         {
-            data: [32, 33, 24, 24, 22, 32, 89, 20],
+            data: arr_akb_klap,
             pointStart: 1,
             name: 'Ток клапана'
         },
         {
-            data: [136, 398, 70, 305, 428, 181, 387, 422],
+            data: arr_press,
             pointStart: 1,
             name: 'Давление'
         },
         {
-            data: [36, 98, 70, 35, 48, 81, 87, 42],
+            data: arr_amper_nagrev,
             pointStart: 1,
             name: 'Ток нагревателя'
         }
@@ -275,17 +285,23 @@ function TestDetail() {
         } else { //если стоп
             setColor("#4DD15A");
             setText("Старт");
-            
+
         }
 
     }
 
+
+    const updateData = async () => {
+        
+    }
     //test upd
     function liveProcess() {
 
         setInterval(() => {
-            let data = new Date().getSeconds().toString()
-            pulse_period = data//тест чтобы проверить как обновляется
+            // let data = new Date().getSeconds().toString()
+            // pulse_period = data//тест чтобы проверить как обновляется
+
+
         }, 1000)
     }
 

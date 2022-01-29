@@ -57,7 +57,8 @@ const SignUp = () => {
   }
 
   const [password, setPassword] = useState('');
-  let isLoggedIn = false
+  let isLoggedIn
+
   const api = axios.create({
     baseURL: server_link
   })
@@ -73,6 +74,11 @@ const SignUp = () => {
     try {
       let data = await api.get('/sign-up').then(({ data }) => data);
       isLoggedIn = data.isLogged
+      if (isLoggedIn == true) {
+        navigate('/list-tests')
+      } else if(isLoggedIn == false) {
+        navigate('/list-tests')
+      }
     } catch (error) {
       console.log(error)
     }
@@ -83,15 +89,11 @@ const SignUp = () => {
   const checkLogin = () => {
     if (password=='') {
       isLoggedIn = false
-      navigate('/list-tests', isLoggedIn)
+      navigate('/list-tests')
     } else {
       sendPass()
       getStatus()
-      if (isLoggedIn == true) {
-        navigate('/list-tests', isLoggedIn)
-      } else {
-        alert('Неверный пароль')
-      }
+      
     }
   }
 
