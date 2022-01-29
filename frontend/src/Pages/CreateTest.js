@@ -4,6 +4,8 @@ import { Link } from "react-router-dom"
 import { BrowserRouter as Redirect } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { server_link } from '../Constants'
+
 
 function CreateTest() {
 
@@ -101,10 +103,10 @@ function CreateTest() {
 
 
     let [state, setState] = useState({})
-
+    const link_list = server_link + "/list_tests"
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/list_tests", {
+        fetch(link_list, {
             method: 'GET'
         }).then(response => {
             if (response.status == 200) {
@@ -134,7 +136,7 @@ function CreateTest() {
     const preset = { duration, preheat_time, duty_cycle, pulse_period };
 
     const api = axios.create({
-        baseURL: 'http://localhost:5000/'
+        baseURL: server_link
     })
 
     const createData = async () => {

@@ -1,9 +1,11 @@
 import React from 'react'
 import { useHref } from 'react-router-dom'
 import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
+import { useNavigate as UseNavigate } from 'react-router-dom'
 import { Router, Route, browserHistory } from 'react-router';
 import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { server_link } from '../Constants';
 
 const SignUp = () => {
 
@@ -55,20 +57,43 @@ const SignUp = () => {
   }
 
   const [password, setPassword] = useState('');
+  let isLoggedIn = false
+  const api = axios.create({
+    baseURL: server_link
+  })
 
-  /* 
-    //POST-запрос
-    fetch('https://localhost:5000/sign-up', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            password: password
-        })
+  const sendPass = async () => {
+    let result = await api.post('/sign-up', {
+      password: password
     })
-    */
+    console.log(result)
+  }
+
+  const getStatus = async () => {
+    try {
+      let data = await api.get('/sign-up').then(({ data }) => data);
+      isLoggedIn = data.isLogged
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+  let navigate = UseNavigate()
+
+  const checkLogin = () => {
+    if (password=='') {
+      isLoggedIn = false
+      navigate('/list-tests', isLoggedIn)
+    } else {
+      sendPass()
+      getStatus()
+      if (isLoggedIn == true) {
+        navigate('/list-tests', isLoggedIn)
+      } else {
+        alert('Неверный пароль')
+      }
+    }
+  }
 
   return (
     <div className="SignUp" style={styles.SignUp}>
@@ -76,12 +101,9 @@ const SignUp = () => {
         Вход
       </h1>
       <input name="formPass" style={styles.formPass} placeholder="Пароль" type="password" value={password} onChange={(event) => setPassword(event.target.value)}></input>
-      <Link className="btnSign1" id="btnSign1" style={styles.btnSign1} to='/list-tests'>
-        <button className="btnSign" id="btnSign" type="submit" onMouseEnter={handleMouseEnter} style={styles.btnSign}>
-          <span style={styles.btnSign1}>Вход</span>
-        </button>
-      </Link>
-
+      <button className="btnSign" id="btnSign" type="submit" onMouseEnter={handleMouseEnter} style={styles.btnSign} onClick={checkLogin}>
+        <span style={styles.btnSign1}>Вход</span>
+      </button>
     </div>
   );
 }

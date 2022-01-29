@@ -2,14 +2,18 @@
 from flask import Flask, render_template, session, request, jsonify
 from data_base import insert_data
 from data_base import export_all_data
-# from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
+
+#from raspi_data import read_arduino, start_engine, find_serial_ports, serial_port_setup
+
 from loggers import *
 from flask_cors import CORS, cross_origin
 from data_base import export_data_json
+from flask_ngrok import run_with_ngrok 
 from time import sleep
 
-
 app = Flask(__name__)
+run_with_ngrok(app)
+
 CORS(app)
 
 password = "17091857"
@@ -31,6 +35,7 @@ def test_status():
 @cross_origin()
 def list_test():
     data = export_all_data()
+    print(str(data))
     return data
 
 
@@ -58,13 +63,12 @@ def create_test():
 @app.route("/launch-test", methods=["POST", "GET"])
 def launch_test():
     if request.method == 'POST':
-        # serial_port_setup(115200, find_serial_ports())
-        # start_engine()
+        #serial_port_setup(115200, find_serial_ports())
+        #start_engine()
         data = request.get_json()
         print(str(data))
-"""        read_arduino(data['duration'], data['duty_cycle'],
-                     data['pulse_period'], data['preheat_time'], data['status'])"""
-        # return str(data)
+        #read_arduino(data['duration'], data['duty_cycle'],data['pulse_period'], data['preheat_time'], data['status'])
+        return str(data)
 
     # if request.method == "POST":
     #     count = 0
@@ -94,20 +98,24 @@ def launch_test():
 @app.route("/sign-up", methods=["POST", "GET"])
 def sign_up():
 
+    #session["userLogged"] = False
+    
     if session["userLogged"] == True:
         json_data = {
             "isLogged": session["userLogged"]
         }
         return json_data
 
-    elif request.method == "POST" and request.form["formPass"] == password:
-        system_logger_write("User logged as admin")
-        session["userLogged"] = True
-        json_data = {
-            "isLogged": session["userLogged"]
-        }
-        return json_data
+    elif request.method == "POST":
+        data = request.get_json()
+        if str(data['password']) == password:
+            system_logger_write("User logged as admin")
+            session["userLogged"] = True
+            json_data = {
+                "isLogged": session["userLogged"]
+            }
+            return json_data
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
